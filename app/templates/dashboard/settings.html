@@ -1,0 +1,58 @@
+{% extends "dashboard/base.html" %}
+
+{% block description %}
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0">Управление ключами авторизации</h1>
+        </div>
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item active"><a href="{{ url_for('dashboard.index') }}">Панель управления</a></li>
+                <li class="breadcrumb-item active">Ключи авторизации</li>
+            </ol>
+         </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+
+        <div class="col-10 offset-1">
+            <div class="card">
+                <div class="card-header d-flex p-0">
+                    <h3 class="card-title p-3">Настройки</h3>
+                    <ul class="nav nav-pills ml-auto p-2">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#general" data-toggle="tab">Система</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#email" data-toggle="tab">Email</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#metrics" data-toggle="tab">Метрики</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#captcha" data-toggle="tab">Капча</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="general">
+                            {% include "dashboard/settings/general.html" %}
+                        </div>
+                        <div class="tab-pane" id="email">
+                            {% include "dashboard/settings/email.html" %}
+                        </div>
+                        <div class="tab-pane" id="metrics">
+                            {% include "dashboard/settings/metrics.html" %}
+                        </div>
+                        <div class="tab-pane" id="captcha">
+                            {% include "dashboard/settings/captcha.html" %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

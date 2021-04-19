@@ -1,0 +1,73 @@
+{% extends "dashboard/base.html" %}
+
+{% block description %}
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0">Панель управления</h1>
+        </div>
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item active"><a href="{{ url_for('dashboard.index') }}">Панель управления</a></li>
+                <li class="breadcrumb-item active">Главная</li>
+            </ol>
+         </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>{{ api_count }}</h3>
+                    <p>API методов</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <a href="#" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>{{ user_count }}</h3>
+                    <p>Пользователей</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                  <a href="#" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-primary">
+                <div class="inner">
+                    <h3>{# {{ request_day_count }} #} 0</h3>
+                    <p>Запросов к API в сутки</p>
+                  </div>
+                <div class="icon">
+                    <i class="fas fa-mouse-pointer"></i>
+                </div>
+                <a href="#" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3>{{ used_api_count }}</h3>
+                    <p>Подключенных API</p>
+                </div>
+                <div class="icon">
+                    <i class="far fa-hdd"></i>
+                </div>
+                  <a href="#" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

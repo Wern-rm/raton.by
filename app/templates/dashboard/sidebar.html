@@ -1,0 +1,59 @@
+<nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-item">
+            <a href="{{ url_for('dashboard.index') }}" class="nav-link">
+                <i class="nav-icon fas fa-desktop"></i> <p>Главная</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ url_for('dashboard.users') }}" class="nav-link">
+                <i class="nav-icon fas fa-users"></i> <p>Пользователи</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-box-open"></i> <p>Каталог продукции</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon far fa-newspaper"></i> <p>Новости</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-columns"></i> <p>Слайдеры</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-photo-video"></i> <p>Медиагалерея</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-user-tie"></i> <p>Руководители</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon far fa-id-badge"></i> <p>Клиенты и отзывы</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon far fa-address-book"></i> <p>Контакты</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon far fa-comment-dots"></i> <p>Обращения</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ url_for('dashboard.settings') }}" class="nav-link">
+                <i class="nav-icon fas fa-cog"></i> <p>Настройки</p>
+            </a>
+        </li>
+    </ul>
+</nav>

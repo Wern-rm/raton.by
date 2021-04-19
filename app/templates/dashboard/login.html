@@ -1,0 +1,51 @@
+{% extends "dashboard/base_auth.html" %}
+
+{% block content %}
+
+    <div class="login-logo">
+        <a href="{{ url_for('dashboard.login') }}">Admin<b> Panel</b></a>
+    </div>
+
+    <div class="card">
+        <div class="card-body login-card-body">
+            <p class="login-box-msg">Авторизуйтесь, чтобы начать работу</p>
+
+            <form action="{{ url_for('dashboard.login') }}" method="post">
+                {{ form.hidden_tag() }}
+                <div class="input-group mb-3">
+                    <input type="email" name="login" class="form-control{% if form.login.errors %} is-invalid {% endif %}" placeholder="Email" required autofocus>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
+                    </div>
+                </div>
+                {% if form.login.errors %}
+                    <div class="invalid-feedback" style="display: block;">
+                        {{ form.login.errors[0] }}
+                    </div>
+                {% endif %}
+                <div class="input-group mb-3">
+                    <input type="password" name="password" class="form-control{% if form.password.errors %} is-invalid {% endif %}" placeholder="Password" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                {% if form.password.errors %}
+                    <div class="invalid-feedback" style="display: block;">
+                        {{ form.password.errors[0] }}
+                    </div>
+                {% endif %}
+                <div class="row">
+                    <div class="col-8"></div>
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-block">Войти</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

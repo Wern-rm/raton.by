@@ -1,0 +1,65 @@
+<form method="post">
+    {{ form2.hidden_tag() }}
+    <input type="hidden" name="form-id" value="2">
+    <table class="table table-striped table-bordered module_config_tables">
+        <tr>
+            <th width="60%">Статус работы Mail модуля<br/><span class="small">Включение/Выключение отправки почты.</span></th>
+            <td width="40%">
+                <div class="form-group">
+                    {{ form2.setting_1(class="form-control") }}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th width="60%">Заголовок письма<br/><span class="small">Заголовок писем при отправке</span></th>
+            <td width="40%">
+                <input class="form-control" type="text" name="setting_2" value="{{ MAIL_TITLE }}"/>
+            </td>
+        </tr>
+        <tr>
+            <th width="60%">Сервер SMTP<br/><span class="small">Сервер почты через который будет работать отправка почты</span></th>
+            <td width="40%">
+                <input class="form-control" type="text" name="setting_3" value="{{ MAIL_SERVER }}"/>
+            </td>
+        </tr>
+        <tr>
+            <th width="60%">Порт сервер SMTP<br/><span class="small">Порт сервер почты через который будет работать отправка почты</span></th>
+            <td width="40%">
+                <input class="form-control" type="text" name="setting_4" value="{{ MAIL_PORT }}"/>
+            </td>
+        </tr>
+        <tr>
+            <th width="60%">Отправка с поддержкой SSL протокола<br/><span class="small">Включение/Выключение отправки почты с поддержкой SSL протокол.</span></th>
+            <td width="40%">
+                <div class="form-group">
+                    {{ form2.setting_5(class="form-control") }}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th width="60%">Отправка через TLS протокол<br/><span class="small">Включение/Выключение отправки почты через TLS протокол.</span></th>
+            <td width="40%">
+                <div class="form-group">
+                    {{ form2.setting_8(class="form-control") }}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th width="60%">Логин почты<br/><span class="small">Логин от почты с доступом к серверу SMTP</span></th>
+            <td width="40%">
+                <input class="form-control" type="text" name="setting_6" value="{{ MAIL_USERNAME }}"/>
+            </td>
+        </tr>
+        <tr>
+            <th width="60%">Пароль от почты<br/><span class="small">Пароль от почты с доступом к серверу SMTP</span></th>
+            <td width="40%">
+                <input class="form-control" type="text" name="setting_7" value="{{ MAIL_PASSWORD }}"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit" class="float-right btn btn-outline-success">Сохранить</button>
+            </td>
+        </tr>
+    </table>
+</form>
