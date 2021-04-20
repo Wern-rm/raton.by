@@ -5,7 +5,7 @@ from datetime import datetime
 class Sliders(db.Model):
     __tablename__ = 'core_sliders'
 
-    id = db.Column(db.Integer(), primary_key=True, autoincrement=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     url = db.Column(db.VARCHAR(255), nullable=False)
     status = db.Column(db.Integer(), nullable=False)
     create_date = db.Column(db.DateTime(), nullable=False)
