@@ -33,3 +33,7 @@ class Config(object):
     SHOW_SINGLE_PAGE = True
     UNIT_PAY_ID = '72f7a10ae5762f18598b6ac228314ab3'
     QUERY_IP_BLOCK_COUNT = 10
+
+
+    APP_FOLDER = os.path.join(UPLOADS_BASE_DIR, 'app')
+    STATIC_APP = os.path.join(APP_FOLDER, 'static')

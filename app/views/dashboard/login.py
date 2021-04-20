@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from flask import render_template, url_for, redirect, request
+from flask import render_template, url_for, redirect, request, session
 from flask_login import current_user, login_user
 
 from app import db, logger
@@ -30,7 +30,10 @@ def login():
                 return redirect(url_for('dashboard.login', action_id=3))
 
             login_user(user=user, remember=False, duration=timedelta(minutes=60))
-            db.session.query(Users).filter(Users.id == user.id).update({'last_ip': get_ip_address()})
+            db.session.query(Users).filter(Users.id == user.id).update({
+                'last_ip': get_ip_address(),
+                'session_id': session.get('_session_id')
+            })
             db.session.commit()
             return redirect(url_for('dashboard.index'))
         except Exception as e:

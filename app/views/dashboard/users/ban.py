@@ -14,8 +14,8 @@ def user_banned(user_id: int, status: int, **kwargs):
     try:
         db.session.query(Users).filter(Users.id == user_id).update({'is_banned': status})
         db.session.commit()
-        return redirect(url_for('dashboard.user', user_id=user_id, action='success', id=11))
+        return redirect(url_for('dashboard.users', action='success', id=11))
     except Exception as e:
         db.session.rollback()
         logger.error(e)
-        return redirect(url_for('dashboard.user', user_id=user_id, action='error', id=999))
+        return redirect(url_for('dashboard.users', action='error', id=999))

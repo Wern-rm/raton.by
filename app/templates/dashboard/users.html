@@ -124,6 +124,11 @@
                                             {% else %}
                                                 <a href="{{ url_for('dashboard.user_activated', user_id=user.id, status=0) }}" class="pl-1" title="Деактивировать"><i class="far fa-times-circle text-danger"></i></a>
                                             {% endif %}
+                                            {% if user.is_banned == 0 %}
+                                                <a href="{{ url_for('dashboard.user_banned', user_id=user.id, status=1) }}" class="pl-1" title="Заблокировать"><i class="fas fa-user-times text-danger"></i></a>
+                                            {% else %}
+                                                <a href="{{ url_for('dashboard.user_banned', user_id=user.id, status=0) }}" class="pl-1" title="Разблокировать"><i class="fas fa-user-times text-success"></i></a>
+                                            {% endif %}
                                             <a href="#" class="pl-1" data-toggle="modal" data-target="#delete-user-{{ user.id }}" title="Удалить"><i class="fas fa-trash-alt text-danger"></i></a>
                                         </div>
                                         <div>
