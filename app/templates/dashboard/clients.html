@@ -91,7 +91,7 @@
                                     </td>
                                     <td><a target="_blank" href="{{ url_for('static', filename=i.url) }}">Логотип</a></td>
                                     <td>
-                                        {% if i.activated == 0 %}
+                                        {% if i.status == 0 %}
                                             <i class="fas fa-check-circle text-danger" title="Клиент не отображается"></i>
                                         {% else %}
                                             <i class="fas fa-check-circle text-success" title="Клиент отображается"></i>

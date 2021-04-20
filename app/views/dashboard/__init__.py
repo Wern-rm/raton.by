@@ -11,3 +11,4 @@ from app.views.dashboard.users import *
 from app.views.dashboard.sliders import *
 from app.views.dashboard.leadership import *
 from app.views.dashboard.clients import *
+from app.views.dashboard.reviews import *
