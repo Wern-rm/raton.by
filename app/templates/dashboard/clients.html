@@ -1,0 +1,230 @@
+{% extends "dashboard/base.html" %}
+
+{% block description %}
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0">Управление клиентами</h1>
+        </div>
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item active"><a href="{{ url_for('dashboard.index') }}">Панель управления</a></li>
+                <li class="breadcrumb-item active">Клиенты</li>
+            </ol>
+         </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Список клиентов</h3>
+                    <div class="card-tools">
+                        <a class="btn btn-outline-success btn-sm" href="#" data-toggle="modal" data-target="#create-client">Добавить клиента</a>
+                        <div class="modal fade" tabindex="-1" role="dialog" id="create-client">
+                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Добавление нового клиента</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form class="" method="post" enctype="multipart/form-data">
+                                        {{ form.hidden_tag() }}
+                                        <input type="hidden" name="form-id" value="1">
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label>Наименование организации</label>
+                                                <input type="text" id="name" name="name" class="form-control {% if form.name.errors %} is-invalid {% endif %}">
+                                                {% if form.name.errors %}
+                                                    <div class="invalid-feedback" style="display: block;">
+                                                        {{ form.name.errors[0] }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form.category.label() }}
+                                                {{ form.category() }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form.file.label() }}
+                                                {{ form.file() }}
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                            <button type="submit" class="btn btn-outline-success float-right">Добавить</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Наименование организации</th>
+                                <th>Категория</th>
+                                <th>Логотип</th>
+                                <th>Статус</th>
+                                <th>Дата добавления</th>
+                                <th>Опции</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in clients %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ i.name }}</td>
+                                    <td>
+                                        {% if i.category == 1 %}
+                                            <span class="badge badge-info">Внешний рынок</span>
+                                        {% elif i.category == 2 %}
+                                            <span class="badge badge-info">Внутренний рынок</span>
+                                        {% endif %}
+                                    </td>
+                                    <td><a target="_blank" href="{{ url_for('static', filename=i.url) }}">Логотип</a></td>
+                                    <td>
+                                        {% if i.activated == 0 %}
+                                            <i class="fas fa-check-circle text-danger" title="Клиент не отображается"></i>
+                                        {% else %}
+                                            <i class="fas fa-check-circle text-success" title="Клиент отображается"></i>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ i.create_date.strftime("%d.%m.%Y %H:%M") }}</td>
+                                    <td>
+                                        <div>
+                                            <a href="#" class="pl-1" data-toggle="modal" data-target="#edit-client-{{ i.id }}" title="Изменить наименование">
+                                                <i class="fas fa-pen text-info"></i>
+                                            </a>
+                                            <a href="#" class="pl-1" data-toggle="modal" data-target="#edit-photo-client-{{ i.id }}" title="Изменить логотип">
+                                                <i class="far fa-file-image text-gray"></i>
+                                            </a>
+                                            {% if i.status == 0 %}
+                                                <a href="{{ url_for('dashboard.client_activated', client_id=i.id, status=1) }}" class="pl-1" title="Отобразить">
+                                                    <i class="far fa-eye text-success"></i>
+                                            {% else %}
+                                                <a href="{{ url_for('dashboard.client_activated', client_id=i.id, status=0) }}" class="pl-1" title="Скрыть">
+                                                    <i class="far fa-eye text-danger"></i>
+                                            {% endif %}
+                                            <a href="#" class="pl-1" data-toggle="modal" data-target="#delete-client-{{ i.id }}" title="Удалить"><i class="fas fa-trash-alt text-danger"></i></a>
+                                        </div>
+                                        <div>
+                                            {# Изменить данные #}
+                                            <div class="modal fade" tabindex="-1" role="dialog" id="edit-client-{{ i.id }}">
+                                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Изменение клиента - {{ i.name }}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <form class="" method="post">
+                                                            {{ form_edit.hidden_tag() }}
+                                                            <input type="hidden" name="form-id" value="2">
+                                                            <input type="hidden" name="client-id" value="{{ i.id }}">
+                                                            <div class="modal-body">
+                                                                <div class="form-group">
+                                                                    <label>Наименование организации</label>
+                                                                    <input type="text" id="name" name="name" class="form-control {% if form_edit.name.errors %} is-invalid {% endif %}" value="{{ i.name }}">
+                                                                    {% if form_edit.name.errors %}
+                                                                        <div class="invalid-feedback" style="display: block;">
+                                                                            {{ form_edit.name.errors[0] }}
+                                                                        </div>
+                                                                    {% endif %}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    {{ form.category.label() }}
+                                                                    {{ form.category(value=i.category) }}
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                                                <button type="submit" class="btn btn-outline-success float-right">Изменить</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {# Изменить логотип #}
+                                            <div class="modal fade" tabindex="-1" role="dialog" id="edit-photo-client-{{ i.id }}">
+                                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Изменение логотип клиента - {{ i.name }}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <form class="" method="post" enctype="multipart/form-data">
+                                                            {{ form_edit_photo.hidden_tag() }}
+                                                            <input type="hidden" name="form-id" value="3">
+                                                            <input type="hidden" name="client-id" value="{{ i.id }}">
+                                                            <div class="modal-body">
+                                                                <div class="form-group">
+                                                                    {{ form_edit_photo.file.label() }}
+                                                                    {{ form_edit_photo.file() }}
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                                                <button type="submit" class="btn btn-outline-success float-right">Загрузить новый логотип</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {# Удалить клиента #}
+                                            <div class="modal fade" tabindex="-1" role="dialog" id="delete-client-{{ i.id }}">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Удаление клиента</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Удалить клиента - "{{ i.name }}"?</p>
+                                                            <p>Данное действие невозможно отменить.</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                                            <a href="{{ url_for('dashboard.client_delete', client_id=i.id) }}" class="btn btn-danger">Удалить</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer clearfix">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="float-left">
+                                {{ pagination.info }}
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="float-right">
+                                {{ pagination.links }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

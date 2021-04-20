@@ -68,8 +68,8 @@ def leaderships(**kwargs):
             filename = uploader.save(file=form.file.data)
             file_url = uploader.get_path(filename=filename)
             old = db.session.query(Leaderships).filter(Leaderships.id == leadership_id).first()
-            if os.path.exists(os.path.join(current_app.config.get('UPLOADS_BASE_DIR'), old.url)):
-                os.remove(os.path.join(current_app.config.get('UPLOADS_BASE_DIR'), old.url))
+            if os.path.exists(os.path.join(current_app.config.get('STATIC_APP'), old.url)):
+                os.remove(os.path.join(current_app.config.get('STATIC_APP'), old.url))
             db.session.query(Leaderships).filter(Leaderships.id == leadership_id).update({'url': file_url})
             db.session.commit()
             return redirect(url_for('dashboard.leaderships', action='success', id=7))
