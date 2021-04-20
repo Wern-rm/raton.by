@@ -7,7 +7,7 @@ from app.models.accounts import Users
 from app.views.dashboard import bp
 
 
-@bp.route('/index')
+@bp.route('/')
 @login_required
 @dashboard_controller
 def index(**kwargs):

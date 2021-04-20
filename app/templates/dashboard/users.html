@@ -22,18 +22,19 @@
                 <div class="card-header">
                     <h3 class="card-title">Список пользователей</h3>
                     <div class="card-tools">
-                        <a class="btn btn-outline-success btn-sm" href="#" data-toggle="modal" data-target="#create-user">Добавить пользователя</a>
+                        <a class="btn btn-outline-success btn-sm" href="#" data-toggle="modal" data-target="#create-user">Добавить аккаунт</a>
                         <div class="modal fade" tabindex="-1" role="dialog" id="create-user">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Удаление аккаунта</h5>
+                                        <h5 class="modal-title">Добавление аккаунта</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <form class="" method="post">
                                         {{ form.hidden_tag() }}
+                                        <input type="hidden" name="form-id" value="1">
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <label>ФИО</label>
@@ -116,6 +117,8 @@
                                     <td>{{ user.edit_date.strftime("%d.%m.%Y %H:%M") }}</td>
                                     <td>
                                         <div>
+                                            <a href="#" class="pl-1" data-toggle="modal" data-target="#edit-user-{{ user.id }}" title="Изменить данные"><i class="fas fa-user-edit text-info"></i></a>
+                                            <a href="#" class="pl-1" data-toggle="modal" data-target="#edit-password-user-{{ user.id }}" title="Изменить пароль"><i class="fas fa-key text-gray"></i></a>
                                             {% if user.activated == 0 %}
                                                 <a href="{{ url_for('dashboard.user_activated', user_id=user.id, status=1) }}" class="pl-1" title="Активировать"><i class="far fa-check-circle text-success"></i></a>
                                             {% else %}
@@ -125,7 +128,94 @@
                                         </div>
                                         <div>
                                             {# Изменить данные #}
+                                            <div class="modal fade" tabindex="-1" role="dialog" id="edit-user-{{ user.id }}">
+                                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Изменение аккаунта - {{ user.email }}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <form class="" method="post">
+                                                            {{ form_edit.hidden_tag() }}
+                                                            <input type="hidden" name="form-id" value="2">
+                                                            <input type="hidden" name="user-id" value="{{ user.id }}">
+                                                            <div class="modal-body">
+                                                                <div class="form-group">
+                                                                    <label>ФИО</label>
+                                                                    <input type="text" id="username" name="username" class="form-control {% if form_edit.username.errors %} is-invalid {% endif %}" value="{{ user.username }}">
+                                                                    {% if form_edit.username.errors %}
+                                                                        <div class="invalid-feedback" style="display: block;">
+                                                                            {{ form_edit.username.errors[0] }}
+                                                                        </div>
+                                                                    {% endif %}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Email</label>
+                                                                    <input type="email" id="email" name="email" class="form-control {% if form_edit.email.errors %} is-invalid {% endif %}" value="{{ user.email }}">
+                                                                    {% if form_edit.email.errors %}
+                                                                        <div class="invalid-feedback" style="display: block;">
+                                                                            {{ form_edit.email.errors[0] }}
+                                                                        </div>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                                                <button type="submit" class="btn btn-outline-success float-right">Изменить</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             {# Изменить пароль #}
+                                            <div class="modal fade" tabindex="-1" role="dialog" id="edit-password-user-{{ user.id }}">
+                                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Изменение пароль - {{ user.email }}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <form class="" method="post">
+                                                            {{ form_password_edit.hidden_tag() }}
+                                                            <input type="hidden" name="form-id" value="3">
+                                                            <input type="hidden" name="user-id" value="{{ user.id }}">
+                                                            <div class="modal-body">
+                                                                <div class="form-group">
+                                                                    <label>Пароль</label>
+                                                                    <input type="password" id="password" name="password" class="form-control {% if form_password_edit.password.errors %} is-invalid {% endif %}">
+                                                                    <div class="">
+                                                                        {% if form_password_edit.password.errors %}
+                                                                            <div class="invalid-feedback" style="display: block;">
+                                                                                {{ form_password_edit.password.errors[0] }}
+                                                                            </div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Повторите пароль</label>
+                                                                    <input type="password" id="confirm_password" name="confirm_password" class="form-control {% if form_password_edit.confirm_password.errors %} is-invalid {% endif %}">
+                                                                    <div class="">
+                                                                        {% if form_password_edit.confirm_password.errors %}
+                                                                            <div class="invalid-feedback" style="display: block;">
+                                                                                {{ form_password_edit.confirm_password.errors[0] }}
+                                                                            </div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                                                <button type="submit" class="btn btn-outline-success float-right">Изменить</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {# Удалить аккаунт #}
                                             <div class="modal fade" tabindex="-1" role="dialog" id="delete-user-{{ user.id }}">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
