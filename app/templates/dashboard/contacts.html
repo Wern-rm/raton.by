@@ -1,0 +1,297 @@
+{% extends "dashboard/base.html" %}
+
+{% block description %}
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0">Управление контактами</h1>
+        </div>
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item active"><a href="{{ url_for('dashboard.index') }}">Панель управления</a></li>
+                <li class="breadcrumb-item active">Контакты</li>
+            </ol>
+         </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Список контактов</h3>
+                    <div class="card-tools">
+                        <a class="btn btn-outline-success btn-sm" href="#" data-toggle="modal" data-target="#create-client">Добавить контакт</a>
+                        <div class="modal fade" tabindex="-1" role="dialog" id="create-client">
+                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Добавление нового контакта</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form class="" method="post" enctype="multipart/form-data">
+                                        {{ form.hidden_tag() }}
+                                        <input type="hidden" name="form-id" value="1">
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label>Название отдела</label>
+                                                <input type="text" id="departament" name="departament" class="form-control {% if form.departament.errors %} is-invalid {% endif %}">
+                                                {% if form.departament.errors %}
+                                                    <div class="invalid-feedback" style="display: block;">
+                                                        {{ form.departament.errors[0] }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Начальник отдела</label>
+                                                <input type="text" id="boss" name="boss" class="form-control {% if form.boss.errors %} is-invalid {% endif %}">
+                                                {% if form.boss.errors %}
+                                                    <div class="invalid-feedback" style="display: block;">
+                                                        {{ form.boss.errors[0] }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Телефон</label>
+                                                <input type="text" id="phone" name="phone" class="form-control {% if form.phone.errors %} is-invalid {% endif %}">
+                                                {% if form.phone.errors %}
+                                                    <div class="invalid-feedback" style="display: block;">
+                                                        {{ form.phone.errors[0] }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Факс</label>
+                                                <input type="text" id="fax" name="fax" class="form-control {% if form.fax.errors %} is-invalid {% endif %}">
+                                                {% if form.fax.errors %}
+                                                    <div class="invalid-feedback" style="display: block;">
+                                                        {{ form.fax.errors[0] }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Email</label>
+                                                <input type="text" id="email" name="email" class="form-control {% if form.email.errors %} is-invalid {% endif %}">
+                                                {% if form.email.errors %}
+                                                    <div class="invalid-feedback" style="display: block;">
+                                                        {{ form.email.errors[0] }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form.displaying_boss.label() }}
+                                                {{ form.displaying_boss() }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form.displaying_phone.label() }}
+                                                {{ form.displaying_phone() }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form.displaying_fax.label() }}
+                                                {{ form.displaying_fax() }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form.displaying_email.label() }}
+                                                {{ form.displaying_email() }}
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                            <button type="submit" class="btn btn-outline-success float-right">Добавить</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Наименование отдела</th>
+                                <th>Начальник отдела</th>
+                                <th>Телефон</th>
+                                <th>Факс</th>
+                                <th>Email</th>
+                                <th>Статусы</th>
+                                <th>Опции</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in clients %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ i.departament }}</td>
+                                    <td>{{ i.boss }}</td>
+                                    <td>{{ i.phone }}</td>
+                                    <td>{{ i.fax }}</td>
+                                    <td>{{ i.email }}</td>
+                                    <td>
+                                        {% if i.displaying_boss == 0 %}
+                                            <i class="fas fa-user-tie text-danger pl-2" title="Начальник не отображается"></i>
+                                        {% else %}
+                                            <i class="fas fa-user-tie text-success pl-2" title="Начальник отображается"></i>
+                                        {% endif %}
+                                        {% if i.displaying_phone == 0 %}
+                                            <i class="fas fa-phone-square text-danger pl-2" title="Телефон не отображается"></i>
+                                        {% else %}
+                                            <i class="fas fa-phone-square text-success pl-2" title="Телефон отображается"></i>
+                                        {% endif %}
+                                        {% if i.displaying_fax == 0 %}
+                                            <i class="fas fa-fax text-danger pl-2" title="Факс не отображается"></i>
+                                        {% else %}
+                                            <i class="fas fa-fax text-success pl-2" title="Факс отображается"></i>
+                                        {% endif %}
+                                        {% if i.displaying_email == 0 %}
+                                            <i class="fas fa-envelope text-danger pl-2" title="Email не отображается"></i>
+                                        {% else %}
+                                            <i class="fas fa-envelope text-success pl-2" title="Email отображается"></i>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <a href="#" class="pl-1" data-toggle="modal" data-target="#edit-contact-{{ i.id }}" title="Изменить">
+                                                <i class="fas fa-pen text-info"></i>
+                                            </a>
+                                            <a href="#" class="pl-1" data-toggle="modal" data-target="#delete-contact-{{ i.id }}" title="Удалить">
+                                                <i class="fas fa-trash-alt text-danger"></i>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            {# Изменить данные #}
+                                            <div class="modal fade" tabindex="-1" role="dialog" id="edit-contact-{{ i.id }}">
+                                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Изменение контакта - {{ i.departament }}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <form class="" method="post">
+                                                            {{ form_edit.hidden_tag() }}
+                                                            <input type="hidden" name="form-id" value="2">
+                                                            <input type="hidden" name="contact-id" value="{{ i.id }}">
+                                                            <div class="modal-body">
+                                                                <div class="form-group">
+                                                                    <label>Название отдела</label>
+                                                                    <input type="text" id="departament" name="departament" class="form-control {% if form_edit.departament.errors %} is-invalid {% endif %}" value="{{ i.departament }}">
+                                                                    {% if form_edit.departament.errors %}
+                                                                        <div class="invalid-feedback" style="display: block;">
+                                                                            {{ form_edit.departament.errors[0] }}
+                                                                        </div>
+                                                                    {% endif %}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Начальник отдела</label>
+                                                                    <input type="text" id="boss" name="boss" class="form-control {% if form_edit.boss.errors %} is-invalid {% endif %}" value="{{ i.boss }}">
+                                                                    {% if form_edit.boss.errors %}
+                                                                        <div class="invalid-feedback" style="display: block;">
+                                                                            {{ form_edit.boss.errors[0] }}
+                                                                        </div>
+                                                                    {% endif %}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Телефон</label>
+                                                                    <input type="text" id="phone" name="phone" class="form-control {% if form_edit.phone.errors %} is-invalid {% endif %}" value="{{ i.phone }}">
+                                                                    {% if form_edit.phone.errors %}
+                                                                        <div class="invalid-feedback" style="display: block;">
+                                                                            {{ form_edit.phone.errors[0] }}
+                                                                        </div>
+                                                                    {% endif %}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Факс</label>
+                                                                    <input type="text" id="fax" name="fax" class="form-control {% if form_edit.fax.errors %} is-invalid {% endif %}" value="{{ i.fax }}">
+                                                                    {% if form_edit.fax.errors %}
+                                                                        <div class="invalid-feedback" style="display: block;">
+                                                                            {{ form_edit.fax.errors[0] }}
+                                                                        </div>
+                                                                    {% endif %}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Email</label>
+                                                                    <input type="text" id="email" name="email" class="form-control {% if form_edit.email.errors %} is-invalid {% endif %}" value="{{ i.email }}">
+                                                                    {% if form_edit.email.errors %}
+                                                                        <div class="invalid-feedback" style="display: block;">
+                                                                            {{ form_edit.email.errors[0] }}
+                                                                        </div>
+                                                                    {% endif %}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    {{ form_edit.displaying_boss.label() }}
+                                                                    {{ form_edit.displaying_boss() }}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    {{ form_edit.displaying_phone.label() }}
+                                                                    {{ form_edit.displaying_phone() }}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    {{ form_edit.displaying_fax.label() }}
+                                                                    {{ form_edit.displaying_fax() }}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    {{ form_edit.displaying_email.label() }}
+                                                                    {{ form_edit.displaying_email() }}
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                                                <button type="submit" class="btn btn-outline-success float-right">Изменить</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {# Удалить клиента #}
+                                            <div class="modal fade" tabindex="-1" role="dialog" id="delete-contact-{{ i.id }}">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Удаление контакты</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Удалить контакты - "{{ i.departament }}"?</p>
+                                                            <p>Данное действие невозможно отменить.</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                                            <a href="{{ url_for('dashboard.contact_delete', contact_id=i.id) }}" class="btn btn-danger">Удалить</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer clearfix">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="float-left">
+                                {{ pagination.info }}
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="float-right">
+                                {{ pagination.links }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
