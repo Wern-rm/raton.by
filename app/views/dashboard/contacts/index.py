@@ -72,7 +72,7 @@ def contacts(**kwargs):
     kwargs['page'] = page
     kwargs['per_page'] = per_page
     kwargs['offset'] = offset
-    kwargs['clients'] = db.session.query(Contacts).order_by(Contacts.id.desc()).limit(per_page).offset(offset).all()
+    kwargs['clients'] = db.session.query(Contacts).order_by(Contacts.id).limit(per_page).offset(offset).all()
     kwargs['pagination'] = get_pagination(page=page, per_page=per_page, total=count, record_name='items', format_total=True, format_number=True)
     kwargs['form'] = form
     kwargs['form_edit'] = form_edit
