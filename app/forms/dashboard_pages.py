@@ -7,4 +7,4 @@ from wtforms import StringField
 class PagesForm(FlaskForm):
     name = StringField('Название')
     alias = StringField('Алиас')
-    text = CKEditorField('Тест страницы', validators=[DataRequired()])
+    text = CKEditorField('Текст страницы', validators=[DataRequired()])
