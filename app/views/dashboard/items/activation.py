@@ -14,8 +14,8 @@ def item_activated(item_id: int, status: int):
     try:
         db.session.query(Items).filter(Items.id == item_id).update({'status': status})
         db.session.commit()
-        return redirect(url_for('dashboard.items', action='success', id=23))
+        return redirect(url_for('dashboard.items', action='success', id=11))
     except Exception as e:
         db.session.rollback()
         logger.error(e)
-        return redirect(url_for('dashboard.items', action='error', id=999))
+        return redirect(url_for('dashboard.items', action='warning', id=1))

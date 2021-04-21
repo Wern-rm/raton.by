@@ -21,11 +21,11 @@ def reviews(**kwargs):
             file_url = uploader.get_path(filename=filename)
             db.session.add(Reviews(name=form.name.data, url=file_url))
             db.session.commit()
-            return redirect(url_for('dashboard.reviews', action='success', id=7))
+            return redirect(url_for('dashboard.reviews', action='success', id=58))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.reviews', action='error', id=999))
+            return redirect(url_for('dashboard.reviews', action='warning', id=1))
 
     kwargs['title'] = 'Управление отзывами'
     kwargs['form'] = form

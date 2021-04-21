@@ -14,8 +14,8 @@ def contact_delete(contact_id: int):
     try:
         db.session.query(Contacts).filter(Contacts.id == contact_id).delete()
         db.session.commit()
-        return redirect(url_for('dashboard.contacts', action='success', id=22))
+        return redirect(url_for('dashboard.contacts', action='success', id=10))
     except Exception as e:
         db.session.rollback()
         logger.error(e)
-        return redirect(url_for('dashboard.contacts', action='error', id=999))
+        return redirect(url_for('dashboard.contacts', action='warning', id=1))

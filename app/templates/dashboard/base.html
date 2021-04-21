@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/OverlayScrollbars.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/daterangepicker.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/toastr.min.css') }}">
+
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     {% block css %} {% endblock %}
 </head>
@@ -83,6 +85,8 @@
     <script src="{{ url_for('static', filename='dashboard/js/dashboard.js') }}"></script>
     <script src="{{ url_for('static', filename='dashboard/js/demo.js') }}"></script>
 
+    <script src="{{ url_for('static', filename='dashboard/js/toastr.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/alerts.js') }}"></script>
     {% block js %} {% endblock %}
 </body>
 </html>

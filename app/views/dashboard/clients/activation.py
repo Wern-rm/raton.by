@@ -14,8 +14,8 @@ def client_activated(client_id: int, status: int):
     try:
         db.session.query(Clients).filter(Clients.id == client_id).update({'status': status})
         db.session.commit()
-        return redirect(url_for('dashboard.clients', action='success', id=23))
+        return redirect(url_for('dashboard.clients', action='success', id=3))
     except Exception as e:
         db.session.rollback()
         logger.error(e)
-        return redirect(url_for('dashboard.clients', action='error', id=999))
+        return redirect(url_for('dashboard.clients', action='warning', id=1))

@@ -31,13 +31,13 @@ def media(**kwargs):
             if not found:
                 db.session.add(PhotoCatalogs(name=form.name.data))
                 db.session.commit()
-                return redirect(url_for('dashboard.media', action='success', id=7))
+                return redirect(url_for('dashboard.media', action='success', id=32))
             else:
-                return redirect(url_for('dashboard.media', action='error', id=8))
+                return redirect(url_for('dashboard.media', action='error', id=20))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.media', action='error', id=999))
+            return redirect(url_for('dashboard.media', action='error', id=21))
 
     form_edit = PhotoCatalogsForm()
     if form_edit.validate_on_submit() and request.form['form-id'] == '2':
@@ -47,13 +47,13 @@ def media(**kwargs):
             if not found:
                 db.session.query(PhotoCatalogs).filter(PhotoCatalogs.id == catalog_id).update({'name': form_edit.name.data})
                 db.session.commit()
-                return redirect(url_for('dashboard.media', action='success', id=7))
+                return redirect(url_for('dashboard.media', action='success', id=33))
             else:
-                return redirect(url_for('dashboard.media', action='error', id=8))
+                return redirect(url_for('dashboard.media', action='error', id=20))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.media', action='error', id=999))
+            return redirect(url_for('dashboard.media', action='error', id=22))
 
     form_video = MediaVideos()
     if form_video.validate_on_submit() and request.form['form-id'] == '3':
@@ -62,13 +62,13 @@ def media(**kwargs):
             if not found:
                 db.session.add(Videos(name=form_video.name.data, url=form_video.url.data))
                 db.session.commit()
-                return redirect(url_for('dashboard.media', action='success', id=7))
+                return redirect(url_for('dashboard.media', action='success', id=34))
             else:
-                return redirect(url_for('dashboard.media', action='error', id=8))
+                return redirect(url_for('dashboard.media', action='error', id=23))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.media', action='error', id=999))
+            return redirect(url_for('dashboard.media', action='error', id=24))
 
     kwargs['title'] = 'Управление медиа'
     kwargs['photo_catalogs'] = db.session.query(PhotoCatalogs).order_by(PhotoCatalogs.id).limit(per_page_photo).offset(offset_photo).all()

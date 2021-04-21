@@ -20,8 +20,8 @@ def slider_delete(slider_id: int):
         if os.path.exists(os.path.join(current_app.config.get('STATIC_APP'), filename)):
             os.remove(os.path.join(current_app.config.get('STATIC_APP'), filename))
         db.session.commit()
-        return redirect(url_for('dashboard.sliders', action='success', id=22))
+        return redirect(url_for('dashboard.sliders', action='success', id=60))
     except Exception as e:
         db.session.rollback()
         logger.error(e)
-        return redirect(url_for('dashboard.index', action='error', id=999))
+        return redirect(url_for('dashboard.index', action='warning', id=1))

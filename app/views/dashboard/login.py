@@ -21,13 +21,13 @@ def login():
             user = db.session.query(Users).filter(Users.email == form.login.data).first()
 
             if user is None:
-                return redirect(url_for('dashboard.login', action_id=0))
+                return redirect(url_for('dashboard.login', action='error', id=0))
             if user.activated == 0:
-                return redirect(url_for('dashboard.login', action_id=1))
+                return redirect(url_for('dashboard.login', action='error', id=1))
             if user.is_banned == 1:
-                return redirect(url_for('dashboard.login', action_id=2))
+                return redirect(url_for('dashboard.login', action='error', id=2))
             if user.password != Users.sha256_base64(form.password.data):
-                return redirect(url_for('dashboard.login', action_id=3))
+                return redirect(url_for('dashboard.login', action='error', id=0))
 
             login_user(user=user, remember=False, duration=timedelta(minutes=60))
             db.session.query(Users).filter(Users.id == user.id).update({
@@ -39,7 +39,7 @@ def login():
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.login', action_id=999))
+            return redirect(url_for('dashboard.login', action='warning', id=1))
     kwargs = {
         'title': 'Авторизация',
         'form': form

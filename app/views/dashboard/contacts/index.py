@@ -33,13 +33,13 @@ def contacts(**kwargs):
                                displaying_email=form.displaying_email.data)
                 db.session.add(new)
                 db.session.commit()
-                return redirect(url_for('dashboard.contacts', action='success', id=7))
+                return redirect(url_for('dashboard.contacts', action='success', id=8))
             else:
-                return redirect(url_for('dashboard.contacts', action='error', id=8))
+                return redirect(url_for('dashboard.contacts', action='error', id=6))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.contacts', action='error', id=999))
+            return redirect(url_for('dashboard.contacts', action='warning', id=1))
 
     form_edit = ContactsForm()
     if form_edit.validate_on_submit() and request.form['form-id'] == '2':
@@ -59,13 +59,13 @@ def contacts(**kwargs):
                     'displaying_email': form_edit.displaying_email.data
                 })
                 db.session.commit()
-                return redirect(url_for('dashboard.contacts', action='success', id=7))
+                return redirect(url_for('dashboard.contacts', action='success', id=9))
             else:
-                return redirect(url_for('dashboard.contacts', action='error', id=8))
+                return redirect(url_for('dashboard.contacts', action='error', id=6))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.contacts', action='error', id=999))
+            return redirect(url_for('dashboard.contacts', action='warning', id=1))
 
     kwargs['title'] = 'Управление контактами'
     kwargs['counts'] = count

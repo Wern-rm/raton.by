@@ -14,8 +14,8 @@ def review_activated(review_id: int, status: int):
     try:
         db.session.query(Reviews).filter(Reviews.id == review_id).update({'status': status})
         db.session.commit()
-        return redirect(url_for('dashboard.reviews', action='success', id=23))
+        return redirect(url_for('dashboard.reviews', action='success', id=56))
     except Exception as e:
         db.session.rollback()
         logger.error(e)
-        return redirect(url_for('dashboard.reviews', action='error', id=999))
+        return redirect(url_for('dashboard.reviews', action='warning', id=1))

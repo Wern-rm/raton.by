@@ -18,8 +18,8 @@ def item_category_image_activated(item_id: int, image_id: int):
         item = db.session.query(Items).filter(Items.id == image.item_id).first()
         db.session.query(ItemsCategory).filter(ItemsCategory.id == item.category_id).update({'image': image.url})
         db.session.commit()
-        return redirect(url_for('dashboard.item', item_id=item_id, action='success', id=23))
+        return redirect(url_for('dashboard.item', item_id=item_id, action='success', id=18))
     except Exception as e:
         db.session.rollback()
         logger.error(e)
-        return redirect(url_for('dashboard.item', item_id=item_id, action='error', id=999))
+        return redirect(url_for('dashboard.item', item_id=item_id, action='warning', id=1))

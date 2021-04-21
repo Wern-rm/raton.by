@@ -32,11 +32,11 @@ def settings(**kwargs):
                 TECHNICAL_WORKS=bool(util.strtobool(form1.setting_3.data)),
                 TEMPLATES_AUTO_RELOAD=bool(util.strtobool(form1.setting_4.data))
             )
-            return redirect(url_for('dashboard.settings', action='success', action_id=123))
+            return redirect(url_for('dashboard.settings', action='success', id=0))
         except Exception as e:
             logger.error(e)
             db.session.rollback()
-            return redirect(url_for('dashboard.settings', action='error', action_id=123))
+            return redirect(url_for('dashboard.settings', action='error', id=3))
     form2 = SettingsForm2(setting_1=current_app.config.get('MAIL_ENABLED'),
                           setting_5=current_app.config.get('MAIL_USE_SSL'),
                           setting_8=current_app.config.get('MAIL_USE_TLS'))
@@ -64,11 +64,11 @@ def settings(**kwargs):
                 MAIL_PASSWORD=form2.setting_7.data,
                 MAIL_USE_TLS=bool(util.strtobool(form2.setting_8.data))
             )
-            return redirect(url_for('dashboard.settings', action='success', action_id=123))
+            return redirect(url_for('dashboard.settings', action='success', id=1))
         except Exception as e:
             logger.error(e)
             db.session.rollback()
-            return redirect(url_for('dashboard.settings', action='error', action_id=123))
+            return redirect(url_for('dashboard.settings', action='error', id=4))
     kwargs['title'] = 'Управление настройками'
     kwargs['form1'] = form1
     kwargs['form2'] = form2

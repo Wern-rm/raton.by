@@ -1,17 +1,14 @@
-import os
-
-from flask import render_template, redirect, url_for, current_app, request
+from flask import render_template, redirect, url_for, request
 from flask_login import login_required
 from flask_paginate import get_page_args
 
 from app import db, logger
-from app.forms.dashboard_items import ItemsCategoryForm, ItemsForm
-from app.models.items_category import ItemsCategory
-from app.utils.flask_upload_files import UploadFiles, IMAGES
-from app.views.dashboard import bp
 from app.controllers.dashboard_controller import dashboard_controller
-from app.models.items import Items
 from app.controllers.pagination import get_pagination
+from app.forms.dashboard_items import ItemsCategoryForm, ItemsForm
+from app.models.items import Items
+from app.models.items_category import ItemsCategory
+from app.views.dashboard import bp
 
 
 @bp.route('/items', methods=['GET', 'POST'])
@@ -27,11 +24,11 @@ def items(**kwargs):
         try:
             db.session.add(ItemsCategory(title=form_create_category.title.data))
             db.session.commit()
-            return redirect(url_for('dashboard.items', action='success', id=7))
+            return redirect(url_for('dashboard.items', action='success', id=21))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.items', action='error', id=999))
+            return redirect(url_for('dashboard.items', action='error', id=7))
 
     form_edit_category = ItemsCategoryForm()
     if form_edit_category.validate_on_submit() and request.form['form-id'] == '2':
@@ -41,13 +38,13 @@ def items(**kwargs):
             if not found:
                 db.session.query(ItemsCategory).filter(ItemsCategory.id == category_id).update({'title': form_edit_category.title.data})
                 db.session.commit()
-                return redirect(url_for('dashboard.items', action='success', id=7))
+                return redirect(url_for('dashboard.items', action='success', id=22))
             else:
                 return redirect(url_for('dashboard.items', action='error', id=8))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.items', action='error', id=999))
+            return redirect(url_for('dashboard.items', action='error', id=9))
 
     form_create_item = ItemsForm()
     form_create_item.category_id.choices = [(i.id, i.title) for i in category]
@@ -57,11 +54,11 @@ def items(**kwargs):
                                  text=form_create_item.text.data,
                                  category_id=form_create_item.category_id.data))
             db.session.commit()
-            return redirect(url_for('dashboard.items', action='success', id=7))
+            return redirect(url_for('dashboard.items', action='success', id=23))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.items', action='error', id=999))
+            return redirect(url_for('dashboard.items', action='error', id=10))
 
     form_edit_item = ItemsForm()
     form_edit_item.category_id.choices = [(i.id, i.title) for i in category]
@@ -78,11 +75,11 @@ def items(**kwargs):
                 db.session.commit()
                 return redirect(url_for('dashboard.items', action='success', id=7))
             else:
-                return redirect(url_for('dashboard.items', action='error', id=8))
+                return redirect(url_for('dashboard.items', action='error', id=12))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.items', action='error', id=999))
+            return redirect(url_for('dashboard.items', action='error', id=11))
 
     kwargs['title'] = 'Управление каталогом продукции'
     kwargs['form_create_category'] = form_create_category

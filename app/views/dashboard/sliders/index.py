@@ -23,11 +23,11 @@ def sliders(**kwargs):
             file_url = uploader.get_path(filename=filename)
             db.session.add(Sliders(url=file_url))
             db.session.commit()
-            return redirect(url_for('dashboard.sliders', action='success', id=21))
+            return redirect(url_for('dashboard.sliders', action='success', id=61))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.sliders', action="error", id=999))
+            return redirect(url_for('dashboard.sliders', action="warning", id=1))
 
     kwargs['title'] = 'Управление слайдером'
     kwargs['data'] = db.session.query(Sliders).order_by(Sliders.id.desc()).all()

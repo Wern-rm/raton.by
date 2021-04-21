@@ -14,8 +14,8 @@ def photo_activated(photo_id: int, status: int, catalog_id: int):
     try:
         db.session.query(Photos).filter(Photos.id == photo_id).update({'status': status})
         db.session.commit()
-        return redirect(url_for('dashboard.media_photos', catalog_id=catalog_id, action='success', id=23))
+        return redirect(url_for('dashboard.media_photos', catalog_id=catalog_id, action='success', id=35))
     except Exception as e:
         db.session.rollback()
         logger.error(e)
-        return redirect(url_for('dashboard.media_photos', catalog_id=catalog_id, action='error', id=999))
+        return redirect(url_for('dashboard.media_photos', catalog_id=catalog_id, action='warning', id=1))

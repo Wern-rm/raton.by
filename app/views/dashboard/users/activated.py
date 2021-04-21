@@ -14,8 +14,8 @@ def user_activated(user_id: int, status: int, **kwargs):
     try:
         db.session.query(Users).filter(Users.id == user_id).update({'activated': status})
         db.session.commit()
-        return redirect(url_for('dashboard.users', user_id=user_id, action='success', id=9))
+        return redirect(url_for('dashboard.users', user_id=user_id, action='success', id=62))
     except Exception as e:
         db.session.rollback()
         logger.error(e)
-        return redirect(url_for('dashboard.user', user_id=user_id, action='error', id=999))
+        return redirect(url_for('dashboard.user', user_id=user_id, action='warning', id=1))

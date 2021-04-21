@@ -15,11 +15,11 @@ def media_delete(catalog_id: int):
     try:
         count = db.session.query(Photos).filter(Photos.catalog_id == catalog_id).count()
         if count != 0:
-            return redirect(url_for('dashboard.media', action='error', id=22))
+            return redirect(url_for('dashboard.media', action='error', id=19))
         db.session.query(PhotoCatalogs).filter(PhotoCatalogs.id == catalog_id).delete()
         db.session.commit()
-        return redirect(url_for('dashboard.media', action='success', id=22))
+        return redirect(url_for('dashboard.media', action='success', id=30))
     except Exception as e:
         db.session.rollback()
         logger.error(e)
-        return redirect(url_for('dashboard.media', action='error', id=999))
+        return redirect(url_for('dashboard.media', action='warning', id=1))

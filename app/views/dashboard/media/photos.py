@@ -26,11 +26,11 @@ def media_photos(catalog_id: int, **kwargs):
             file_url = uploader.get_path(filename=filename)
             db.session.add(Photos(catalog_id=catalog_id, url=file_url))
             db.session.commit()
-            return redirect(url_for('dashboard.media_photos', catalog_id=catalog_id, action='success', id=7))
+            return redirect(url_for('dashboard.media_photos', catalog_id=catalog_id, action='success', id=37))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.media_photos', catalog_id=catalog_id, action='error', id=999))
+            return redirect(url_for('dashboard.media_photos', catalog_id=catalog_id, action='warning', id=1))
 
     kwargs['title'] = 'Управление медиа'
     kwargs['data'] = db.session.query(Photos).filter(Photos.catalog_id == catalog_id).order_by(Photos.id).all()

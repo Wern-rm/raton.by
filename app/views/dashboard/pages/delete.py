@@ -14,8 +14,8 @@ def page_delete(page_id: int):
     try:
         db.session.query(Pages).filter(Pages.id == page_id).delete()
         db.session.commit()
-        return redirect(url_for('dashboard.pages', action='success', id=22))
+        return redirect(url_for('dashboard.pages', action='success', id=50))
     except Exception as e:
         db.session.rollback()
         logger.error(e)
-        return redirect(url_for('dashboard.pages', action='error', id=999))
+        return redirect(url_for('dashboard.pages', action='warning', id=1))

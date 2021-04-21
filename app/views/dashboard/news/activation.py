@@ -14,8 +14,8 @@ def new_activated(new_id: int, status: int):
     try:
         db.session.query(News).filter(News.id == new_id).update({'status': status})
         db.session.commit()
-        return redirect(url_for('dashboard.news', action='success', id=23))
+        return redirect(url_for('dashboard.news', action='success', id=40))
     except Exception as e:
         db.session.rollback()
         logger.error(e)
-        return redirect(url_for('dashboard.news', action='error', id=999))
+        return redirect(url_for('dashboard.news', action='warning', id=1))

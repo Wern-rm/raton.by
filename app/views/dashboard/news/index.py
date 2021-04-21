@@ -31,11 +31,11 @@ def news(**kwargs):
             file_url = uploader.get_path(filename=filename)
             db.session.add(News(title=form.title.data, text=form.text.data, image=file_url, category_id=form.category.data))
             db.session.commit()
-            return redirect(url_for('dashboard.news', action='success', id=7))
+            return redirect(url_for('dashboard.news', action='success', id=45))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.news', action='error', id=999))
+            return redirect(url_for('dashboard.news', action='warning', id=1))
 
     form_category = NewsCategoryForm()
     if form_category.validate_on_submit() and request.form['form-id'] == '4':
@@ -44,13 +44,13 @@ def news(**kwargs):
             if not found:
                 db.session.add(NewsCategory(name=form_category.name.data))
                 db.session.commit()
-                return redirect(url_for('dashboard.news', action='success', id=7))
+                return redirect(url_for('dashboard.news', action='success', id=44))
             else:
-                return redirect(url_for('dashboard.news', action='error', id=7))
+                return redirect(url_for('dashboard.news', action='error', id=26))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.news', action='error', id=999))
+            return redirect(url_for('dashboard.news', action='warning', id=1))
 
     form_edit_category = NewsCategoryForm()
     if form_edit_category.validate_on_submit() and request.form['form-id'] == '5':
@@ -60,13 +60,13 @@ def news(**kwargs):
             if not found:
                 db.session.query(NewsCategory).filter(NewsCategory.id == category_id).update({'name': form_edit_category.name.data})
                 db.session.commit()
-                return redirect(url_for('dashboard.news', action='success', id=7))
+                return redirect(url_for('dashboard.news', action='success', id=46))
             else:
-                return redirect(url_for('dashboard.news', action='error', id=8))
+                return redirect(url_for('dashboard.news', action='error', id=26))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.news', action='error', id=999))
+            return redirect(url_for('dashboard.news', action='warning', id=1))
 
     form_edit = NewsEditForm()
     form_edit.category.choices = [(i.id, i.name) for i in category]
@@ -79,11 +79,11 @@ def news(**kwargs):
                 'text': form_edit.text.data
             })
             db.session.commit()
-            return redirect(url_for('dashboard.news', action='success', id=7))
+            return redirect(url_for('dashboard.news', action='success', id=47))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.news', action='error', id=999))
+            return redirect(url_for('dashboard.news', action='warning', id=1))
 
     form_new_edit_photo = NewsEditImageForm()
     if form_new_edit_photo.validate_on_submit() and request.form['form-id'] == '3':
@@ -96,11 +96,11 @@ def news(**kwargs):
                 os.remove(os.path.join(current_app.config.get('STATIC_APP'), old.image))
             db.session.query(News).filter(News.id == new_id).update({'image': file_url})
             db.session.commit()
-            return redirect(url_for('dashboard.news', action='success', id=7))
+            return redirect(url_for('dashboard.news', action='success', id=48))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.news', action='error', id=999))
+            return redirect(url_for('dashboard.news', action='warning', id=1))
 
     kwargs['title'] = 'Управление страницами'
     kwargs['news'] = db.session.query(News).order_by(News.id).limit(per_page).offset(offset).all()

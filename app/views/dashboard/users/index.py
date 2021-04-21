@@ -28,13 +28,13 @@ def users(**kwargs):
                 new = Users(email=form.email.data, password=form.password.data, username=form.username.data, activated=True)
                 db.session.add(new)
                 db.session.commit()
-                return redirect(url_for('dashboard.users', action='success', id=7))
+                return redirect(url_for('dashboard.users', action='success', id=65))
             else:
-                return redirect(url_for('dashboard.users', action='error', id=8))
+                return redirect(url_for('dashboard.users', action='error', id=28))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.users', action='error', id=999))
+            return redirect(url_for('dashboard.users', action='warning', id=1))
 
     form_edit = UserEditForm()
     if form_edit.validate_on_submit() and request.form['form-id'] == '2':
@@ -48,13 +48,13 @@ def users(**kwargs):
                     'edit_date': datetime.now()
                 })
                 db.session.commit()
-                return redirect(url_for('dashboard.users', action='success', id=7))
+                return redirect(url_for('dashboard.users', action='success', id=66))
             else:
-                return redirect(url_for('dashboard.users', action='error', id=8))
+                return redirect(url_for('dashboard.users', action='error', id=28))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.users', action='error', id=999))
+            return redirect(url_for('dashboard.users', action='warning', id=1))
 
     form_password_edit = PasswordForm()
     if form_password_edit.validate_on_submit() and request.form['form-id'] == '3':
@@ -65,11 +65,11 @@ def users(**kwargs):
                 'edit_date': datetime.now()
             })
             db.session.commit()
-            return redirect(url_for('dashboard.users', action='success', id=7))
+            return redirect(url_for('dashboard.users', action='success', id=67))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.users', action='error', id=999))
+            return redirect(url_for('dashboard.users', action='warning', id=11))
 
     kwargs['title'] = 'Управление Пользователями'
     kwargs['user_count'] = count

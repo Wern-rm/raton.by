@@ -31,13 +31,13 @@ def leaderships(**kwargs):
                                   email=form.email.data)
                 db.session.add(new)
                 db.session.commit()
-                return redirect(url_for('dashboard.leaderships', action='success', id=7))
+                return redirect(url_for('dashboard.leaderships', action='success', id=26))
             else:
-                return redirect(url_for('dashboard.leaderships', action='error', id=8))
+                return redirect(url_for('dashboard.leaderships', action='error', id=15))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.leaderships', action='error', id=999))
+            return redirect(url_for('dashboard.leaderships', action='error', id=16))
 
     form_edit = LeadershipsEditForm()
     if form_edit.validate_on_submit() and request.form['form-id'] == '2':
@@ -53,13 +53,13 @@ def leaderships(**kwargs):
                     'email': form_edit.email.data
                 })
                 db.session.commit()
-                return redirect(url_for('dashboard.leaderships', action='success', id=7))
+                return redirect(url_for('dashboard.leaderships', action='success', id=27))
             else:
-                return redirect(url_for('dashboard.leaderships', action='error', id=8))
+                return redirect(url_for('dashboard.leaderships', action='error', id=15))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.leaderships', action='error', id=999))
+            return redirect(url_for('dashboard.leaderships', action='error', id=17))
 
     form_edit_photo = LeadershipsEditPhotoForm()
     if form_edit_photo.validate_on_submit() and request.form['form-id'] == '3':
@@ -72,11 +72,11 @@ def leaderships(**kwargs):
                 os.remove(os.path.join(current_app.config.get('STATIC_APP'), old.url))
             db.session.query(Leaderships).filter(Leaderships.id == leadership_id).update({'url': file_url})
             db.session.commit()
-            return redirect(url_for('dashboard.leaderships', action='success', id=7))
+            return redirect(url_for('dashboard.leaderships', action='success', id=28))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.leaderships', action='error', id=999))
+            return redirect(url_for('dashboard.leaderships', action='error', id=18))
 
     kwargs['title'] = 'Управление руководителями'
     kwargs['data'] = db.session.query(Leaderships).order_by(Leaderships.id).all()

@@ -15,11 +15,11 @@ def new_category_delete(category_id: int):
     try:
         count = db.session.query(News).filter(News.category_id == category_id).count()
         if count != 0:
-            return redirect(url_for('dashboard.news', action='error', id=22))
+            return redirect(url_for('dashboard.news', action='error', id=25))
         db.session.query(NewsCategory).filter(NewsCategory.id == category_id).delete()
         db.session.commit()
-        return redirect(url_for('dashboard.news', action='success', id=22))
+        return redirect(url_for('dashboard.news', action='success', id=41))
     except Exception as e:
         db.session.rollback()
         logger.error(e)
-        return redirect(url_for('dashboard.news', action='error', id=999))
+        return redirect(url_for('dashboard.news', action='warning', id=1))

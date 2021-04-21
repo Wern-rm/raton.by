@@ -20,8 +20,8 @@ def review_delete(review_id: int):
         if os.path.exists(os.path.join(current_app.config.get('STATIC_APP'), filename)):
             os.remove(os.path.join(current_app.config.get('STATIC_APP'), filename))
         db.session.commit()
-        return redirect(url_for('dashboard.reviews', action='success', id=22))
+        return redirect(url_for('dashboard.reviews', action='success', id=57))
     except Exception as e:
         db.session.rollback()
         logger.error(e)
-        return redirect(url_for('dashboard.reviews', action='error', id=999))
+        return redirect(url_for('dashboard.reviews', action='warning', id=1))

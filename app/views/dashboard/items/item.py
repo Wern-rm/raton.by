@@ -1,19 +1,14 @@
-import os
-
 from flask import render_template, redirect, url_for, current_app, request
 from flask_login import login_required
-from flask_paginate import get_page_args
 
 from app import db, logger
-from app.forms.dashboard_items import ItemsFile, ItemsImage
-from app.models.items_category import ItemsCategory
-from app.utils.flask_upload_files import UploadFiles, IMAGES, DOCUMENTS
-from app.views.dashboard import bp
 from app.controllers.dashboard_controller import dashboard_controller
-from app.models.items import Items
-from app.models.item_images import ItemImages
+from app.forms.dashboard_items import ItemsFile, ItemsImage
 from app.models.item_files import ItemFiles
-from app.controllers.pagination import get_pagination
+from app.models.item_images import ItemImages
+from app.models.items import Items
+from app.utils.flask_upload_files import UploadFiles, IMAGES
+from app.views.dashboard import bp
 
 
 @bp.route('/item/<int:item_id>', methods=['GET', 'POST'])
@@ -30,11 +25,11 @@ def item(item_id: int, **kwargs):
             file_url = uploader.get_path(filename=filename)
             db.session.add(ItemImages(item_id=item_id, url=file_url))
             db.session.commit()
-            return redirect(url_for('dashboard.item', item_id=item_id, action='success', id=7))
+            return redirect(url_for('dashboard.item', item_id=item_id, action='success', id=24))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.item', item_id=item_id, action='error', id=999))
+            return redirect(url_for('dashboard.item', item_id=item_id, action='error', id=13))
 
     form_files = ItemsFile()
     if form_files.validate_on_submit() and request.form['form-id'] == '2':
@@ -45,11 +40,11 @@ def item(item_id: int, **kwargs):
             file_url = uploader.get_path(filename=filename)
             db.session.add(ItemFiles(name=form_files.name.data, item_id=item_id, url=file_url))
             db.session.commit()
-            return redirect(url_for('dashboard.item', item_id=item_id, action='success', id=7))
+            return redirect(url_for('dashboard.item', item_id=item_id, action='success', id=25))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.item', item_id=item_id, action='error', id=999))
+            return redirect(url_for('dashboard.item', item_id=item_id, action='error', id=14))
 
     kwargs['title'] = 'Продукт - ' + data_item.title
     kwargs['form_images'] = form_images

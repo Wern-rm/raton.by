@@ -14,8 +14,8 @@ def user_delete(user_id: int, **kwargs):
     try:
         db.session.query(Users).filter(Users.id == user_id).delete()
         db.session.commit()
-        return redirect(url_for('dashboard.users', action='success', id=8))
+        return redirect(url_for('dashboard.users', action='success', id=64))
     except Exception as e:
         db.session.rollback()
         logger.error(e)
-        return redirect(url_for('dashboard.users', action='error', id=999))
+        return redirect(url_for('dashboard.users', action='warning', id=1))

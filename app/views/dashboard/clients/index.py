@@ -34,13 +34,13 @@ def clients(**kwargs):
                               url=file_url)
                 db.session.add(new)
                 db.session.commit()
-                return redirect(url_for('dashboard.clients', action='success', id=7))
+                return redirect(url_for('dashboard.clients', action='success', id=5))
             else:
-                return redirect(url_for('dashboard.clients', action='error', id=8))
+                return redirect(url_for('dashboard.clients', action='error', id=5))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.clients', action='error', id=999))
+            return redirect(url_for('dashboard.clients', action='warning', id=1))
 
     form_edit = ClientsEditForm()
     if form_edit.validate_on_submit() and request.form['form-id'] == '2':
@@ -53,13 +53,13 @@ def clients(**kwargs):
                     'category': form_edit.category.data
                 })
                 db.session.commit()
-                return redirect(url_for('dashboard.clients', action='success', id=7))
+                return redirect(url_for('dashboard.clients', action='success', id=6))
             else:
-                return redirect(url_for('dashboard.clients', action='error', id=8))
+                return redirect(url_for('dashboard.clients', action='error', id=5))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.clients', action='error', id=999))
+            return redirect(url_for('dashboard.clients', action='warning', id=1))
 
     form_edit_photo = ClientsEditPhotoForm()
     if form_edit_photo.validate_on_submit() and request.form['form-id'] == '3':
@@ -76,7 +76,7 @@ def clients(**kwargs):
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.clients', action='error', id=999))
+            return redirect(url_for('dashboard.clients', action='warning', id=1))
 
     kwargs['title'] = 'Управление клиентами'
     kwargs['counts'] = count

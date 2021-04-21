@@ -20,13 +20,13 @@ def pages(**kwargs):
             if not found:
                 db.session.add(Pages(name=form.name.data, alias=form.alias.data, text=form.text.data))
                 db.session.commit()
-                return redirect(url_for('dashboard.pages', action='success', id=7))
+                return redirect(url_for('dashboard.pages', action='success', id=51))
             else:
-                return redirect(url_for('dashboard.pages', action='error', id=8))
+                return redirect(url_for('dashboard.pages', action='error', id=27))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.pages', action='error', id=999))
+            return redirect(url_for('dashboard.pages', action='warning', id=1))
 
     form_edit = PagesForm()
     if form_edit.validate_on_submit() and request.form['form-id'] == '2':
@@ -40,13 +40,13 @@ def pages(**kwargs):
                     'text': form_edit.text.data
                 })
                 db.session.commit()
-                return redirect(url_for('dashboard.pages', action='success', id=7))
+                return redirect(url_for('dashboard.pages', action='success', id=52))
             else:
-                return redirect(url_for('dashboard.pages', action='error', id=8))
+                return redirect(url_for('dashboard.pages', action='error', id=27))
         except Exception as e:
             db.session.rollback()
             logger.error(e)
-            return redirect(url_for('dashboard.pages', action='error', id=999))
+            return redirect(url_for('dashboard.pages', action='warning', id=1))
 
     kwargs['title'] = 'Управление страницами'
     kwargs['data'] = db.session.query(Pages).order_by(Pages.id).all()
