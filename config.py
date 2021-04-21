@@ -24,7 +24,7 @@ class Config(object):
     SQLALCHEMY_ECHO = False
 
     # Flask Uploads
-    MAX_CONTENT_LENGTH = 15 * 1024 * 1024
+    MAX_CONTENT_LENGTH = 30 * 1024 * 1024
     UPLOADS_BASE_DIR = os.getcwd()
 
     PER_PAGE = 25

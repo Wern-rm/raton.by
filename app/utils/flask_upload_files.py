@@ -11,9 +11,11 @@ __version__ = '1.0.1'
 
 import os
 
-from flask import url_for
+from flask import url_for, current_app
 from werkzeug.datastructures import FileStorage
 from werkzeug.utils import secure_filename
+from datetime import datetime
+import hashlib
 
 #: This contains basic image types that are viewable from most browsers (.jpg, jpe, .jpeg, .png, .gif, .svg, and .bmp).
 IMAGES = ['jpg', 'jpe', 'jpeg' 'png', 'gif', 'svg', 'bmp']
@@ -43,12 +45,12 @@ def lowercase_ext(filename):
 
 class UploadFiles(object):
 
-    def __init__(self, basedir, storage, extensions):
+    def __init__(self, basedir, storage, extensions=None, rename_full=True):
         self.basedir = basedir
         self.storage = storage
         self.extensions = extensions
         self.path = os.path.join(basedir, storage)
-        self.set_rename_file = False
+        self.rename_full = rename_full
 
     def extension(self, filename):
         return '.' in filename and str(filename.rsplit('.', 1)[1]).lower() in self.extensions
@@ -62,18 +64,15 @@ class UploadFiles(object):
             if not os.path.exists(os.path.join(self.path, new_name)):
                 return new_name
 
-    def rename_file(self, basename, datetime, storage_id):
-        if self.is_rename_file:
-            name, ext = os.path.splitext(basename)
-            new_name = '%s_%s%s' % (datetime.strftime("%d.%m.%Y_%H-%M"), storage_id, ext)
-            return new_name
-        else:
-            return basename
+    @staticmethod
+    def generate_new_name(basename) -> str:
+        name, ext = os.path.splitext(basename)
+        date = str(datetime.now())
+        key = current_app.config.get('SECRET_KEY')
+        new_name = hashlib.md5(str(date + key).encode()).hexdigest()
+        return '%s%s' % (new_name, ext)
 
-    def is_rename_file(self):
-        self.set_rename_file = True
-
-    def save_file(self, file, datetime, storage_id):
+    def save_file(self, file):
         if not isinstance(file, FileStorage):
             raise TypeError("storage must be a werkzeug.FileStorage")
 
@@ -82,8 +81,8 @@ class UploadFiles(object):
         filename = lowercase_ext(secure_filename(file.filename))
         if file:
             if self.extension(filename):
-                if self.is_rename_file:
-                    filename = self.rename_file(basename=filename, datetime=datetime, storage_id=storage_id)
+                if self.rename_full:
+                    filename = self.generate_new_name(filename)
                 if os.path.exists(os.path.join(self.path, filename)):
                     filename = self.rename(filename)
                 target = os.path.join(self.path, filename)
@@ -103,6 +102,8 @@ class UploadFiles(object):
         filename = lowercase_ext(secure_filename(file.filename))
         if file:
             if self.extension(filename):
+                if self.rename_full:
+                    filename = self.generate_new_name(filename)
                 if os.path.exists(os.path.join(self.path, filename)):
                     filename = self.rename(filename)
                 target = os.path.join(self.path, filename)
