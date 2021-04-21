@@ -20,6 +20,102 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
+                    <h3 class="card-title">Список заявок на продукцию</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Имя</th>
+                                <th>Телефон</th>
+                                <th>Email</th>
+                                <th>Комментарий</th>
+                                <th>Продукт</th>
+                                <th>Статус</th>
+                                <th>Дата добавления</th>
+                                <th>Опции</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in questions2 %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ i.name }}</td>
+                                    <td>{{ i.phone }}</td>
+                                    <td>{{ i.email }}</td>
+                                    <td>
+                                        <a class="btn btn-outline-success btn-sm" href="#" data-toggle="modal" data-target="#message-items-{{ i.id }}">Сообщение</a>
+                                        <div class="modal fade" tabindex="-1" role="dialog" id="message-items-{{ i.id }}">
+                                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Заявка от - {{ i.email }}</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        {{ i.comment }}
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {% for j in items if j.id == i.item_id %}
+                                            <a>{{ j.title }}</a>
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        {% if i.status == 0 %}
+                                            <i class="fas fa-check-circle text-danger" title="Не обработано"></i>
+                                        {% else %}
+                                            <i class="fas fa-check-circle text-success" title="Обработано"></i>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ i.create_date.strftime("%d.%m.%Y %H:%M") }}</td>
+                                    <td>
+                                        <div>
+                                            {% if i.status == 0 %}
+                                                <a href="{{ url_for('dashboard.question_items_activated', question_id=i.id, status=1) }}" class="pl-1" title="Обработать">
+                                                    <i class="far fa-eye text-success"></i>
+                                                </a>
+                                            {% else %}
+                                                <a href="{{ url_for('dashboard.question_items_activated', question_id=i.id, status=0) }}" class="pl-1" title="Отменить обработку">
+                                                    <i class="far fa-eye text-danger"></i>
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer clearfix">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="float-left">
+                                {{ pagination2.info }}
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="float-right">
+                                {{ pagination2.links }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
                     <h3 class="card-title">Список электронный обращений</h3>
                 </div>
                 <div class="card-body">
