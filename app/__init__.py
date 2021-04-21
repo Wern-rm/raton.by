@@ -5,6 +5,7 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
+from flask_ckeditor import CKEditor
 
 from config import Config
 
@@ -12,6 +13,7 @@ logger = logging.getLogger()
 db = SQLAlchemy()
 mail_controller = Mail()
 login = LoginManager()
+editor = CKEditor()
 
 login.login_view = 'dashboard.login'
 
@@ -25,6 +27,7 @@ def create_app(config_class=Config):
     db.init_app(app)
     login.init_app(app)
     mail_controller.init_app(app)
+    editor.init_app(app)
 
     from app.views.main import bp
     app.register_blueprint(bp)

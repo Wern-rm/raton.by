@@ -1,0 +1,202 @@
+{% extends "dashboard/base.html" %}
+
+{% block description %}
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0">Управление страницами</h1>
+        </div>
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item active"><a href="{{ url_for('dashboard.index') }}">Панель управления</a></li>
+                <li class="breadcrumb-item active">Страницы</li>
+            </ol>
+         </div>
+    </div>
+{% endblock %}
+
+{% block css %}
+    {{ ckeditor.load() }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Список страниц</h3>
+                    <div class="card-tools">
+                        <a class="btn btn-outline-success btn-sm" href="#" data-toggle="modal" data-target="#create-page">Добавить страницу</a>
+                        <div class="modal fade" tabindex="-1" role="dialog" id="create-page">
+                            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Добавление новой страницы</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form class="" method="post">
+                                        {{ form.hidden_tag() }}
+                                        <input type="hidden" name="form-id" value="1">
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label>Заголовок страницы</label>
+                                                <input type="text" id="name" name="name" class="form-control {% if form.name.errors %} is-invalid {% endif %}">
+                                                {% if form.name.errors %}
+                                                    <div class="invalid-feedback" style="display: block;">
+                                                        {{ form.name.errors[0] }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Алиас страницы</label>
+                                                <input type="text" id="alias" name="alias" class="form-control {% if form.alias.errors %} is-invalid {% endif %}">
+                                                {% if form.alias.errors %}
+                                                    <div class="invalid-feedback" style="display: block;">
+                                                        {{ form.alias.errors[0] }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form.text.label() }}
+                                                {{ form.text() }}
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                            <button type="submit" class="btn btn-outline-success float-right">Добавить</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Заголовок</th>
+                                <th>Алиас</th>
+                                <th>Ссылка</th>
+                                <th>Статус</th>
+                                <th>Дата добавления</th>
+                                <th>Опции</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in data %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ i.name }}</td>
+                                    <td>{{ i.alias }}</td>
+                                    <td><a target="_blank" href="{{ i.alias }}">Страница</a></td>
+                                    <td>
+                                        {% if i.status == 0 %}
+                                            <i class="fas fa-check-circle text-danger" title="Не отображается"></i>
+                                        {% else %}
+                                            <i class="fas fa-check-circle text-success" title="Отображается"></i>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ i.create_date.strftime("%d.%m.%Y %H:%M") }}</td>
+                                    <td>
+                                        <div>
+                                            <a href="#" class="pl-1" data-toggle="modal" data-target="#edit-page-{{ i.id }}" title="Изменить">
+                                                <i class="fas fa-pen text-info"></i>
+                                            </a>
+                                            {% if i.status == 0 %}
+                                                <a href="{{ url_for('dashboard.page_activated', page_id=i.id, status=1) }}" class="pl-1" title="Отобразить">
+                                                    <i class="far fa-eye text-success"></i>
+                                                </a>
+                                            {% else %}
+                                                <a href="{{ url_for('dashboard.page_activated', page_id=i.id, status=0) }}" class="pl-1" title="Скрыть">
+                                                    <i class="far fa-eye text-danger"></i>
+                                                </a>
+                                            {% endif %}
+                                            <a href="#" class="pl-1" data-toggle="modal" data-target="#delete-page-{{ i.id }}" title="Удалить">
+                                                <i class="fas fa-trash-alt text-danger"></i>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            {# Изменить #}
+                                            <div class="modal fade" tabindex="-1" role="dialog" id="edit-page-{{ i.id }}">
+                                                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Изменение страницы - {{ i.name }}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <form class="" method="post">
+                                                            {{ form_edit.hidden_tag() }}
+                                                            <input type="hidden" name="form-id" value="2">
+                                                            <input type="hidden" name="page-id" value="{{ i.id }}">
+                                                            <div class="modal-body">
+                                                                <div class="form-group">
+                                                                    <label>Заголовок страницы</label>
+                                                                    <input type="text" id="name" name="name" class="form-control {% if form_edit.name.errors %} is-invalid {% endif %}" value="{{ i.name }}">
+                                                                    {% if form_edit.name.errors %}
+                                                                        <div class="invalid-feedback" style="display: block;">
+                                                                            {{ form_edit.name.errors[0] }}
+                                                                        </div>
+                                                                    {% endif %}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Алиас страницы</label>
+                                                                    <input type="text" id="alias" name="alias" class="form-control {% if form_edit.alias.errors %} is-invalid {% endif %}" value="{{ i.alias }}">
+                                                                    {% if form_edit.alias.errors %}
+                                                                        <div class="invalid-feedback" style="display: block;">
+                                                                            {{ form_edit.alias.errors[0] }}
+                                                                        </div>
+                                                                    {% endif %}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    {{ form_edit.text.label() }}
+                                                                    <textarea class="ckeditor " id="text" name="text" style="visibility: hidden; display: none;">{{ i.text }}</textarea>
+{#                                                                    {{ form_edit.text() }}#}
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                                                <button type="submit" class="btn btn-outline-success float-right">Изменить</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {# Удалить #}
+                                            <div class="modal fade" tabindex="-1" role="dialog" id="delete-page-{{ i.id }}">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Удаление страницы</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Удалить страницы - "{{ i.name }}"?</p>
+                                                            <p>Данное действие невозможно отменить.</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                                            <a href="{{ url_for('dashboard.page_delete', page_id=i.id) }}" class="btn btn-danger">Удалить</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

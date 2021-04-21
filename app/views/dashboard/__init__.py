@@ -15,3 +15,4 @@ from app.views.dashboard.reviews import *
 from app.views.dashboard.contacts import *
 from app.views.dashboard.questions import *
 from app.views.dashboard.media import *
+from app.views.dashboard.pages import *
