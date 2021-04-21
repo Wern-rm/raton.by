@@ -14,10 +14,6 @@
     </div>
 {% endblock %}
 
-{% block css %}
-    {{ ckeditor.load() }}
-{% endblock %}
-
 {% block content %}
     <div class="row">
 
@@ -228,7 +224,9 @@
                                         {% endfor %}
                                     </td>
                                     <td>{{ i.views }} <i class="fas fa-eye"></i></td>
-                                    <td><a target="_blank" href="{{ url_for('static', filename=i.image) }}">Изображение</a></td>
+                                    <td>
+                                        <a href="{{ url_for('static', filename=i.image) }}" data-toggle="lightbox">{{ i.image }}</a>
+                                    </td>
                                     <td>
                                         {% if i.status == 0 %}
                                             <i class="fas fa-check-circle text-danger" title="Не отображается"></i>
@@ -374,4 +372,23 @@
         </div>
 
     </div>
+{% endblock %}
+
+{% block css %}
+    {{ ckeditor.load() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/ekko-lightbox.css') }}">
+{% endblock %}
+
+{% block js %}
+    <script src="{{ url_for('static', filename='dashboard/js/ekko-lightbox.min.js') }}"></script>
+    <script>
+      $(function () {
+        $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+          event.preventDefault();
+          $(this).ekkoLightbox({
+            alwaysShowClose: true
+          });
+        });
+      })
+    </script>
 {% endblock %}

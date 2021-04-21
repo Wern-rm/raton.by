@@ -89,7 +89,9 @@
                                             <span class="badge badge-info">Внутренний рынок</span>
                                         {% endif %}
                                     </td>
-                                    <td><a target="_blank" href="{{ url_for('static', filename=i.url) }}">Логотип</a></td>
+                                    <td>
+                                        <a href="{{ url_for('static', filename=i.url) }}" data-toggle="lightbox">{{ i.url }}</a>
+                                    </td>
                                     <td>
                                         {% if i.status == 0 %}
                                             <i class="fas fa-check-circle text-danger" title="Клиент не отображается"></i>
@@ -229,4 +231,23 @@
         </div>
 
     </div>
+{% endblock %}
+
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/ekko-lightbox.css') }}">
+{% endblock %}
+
+{% block js %}
+    <script src="{{ url_for('static', filename='dashboard/js/ekko-lightbox.min.js') }}"></script>
+    <script>
+      $(function () {
+        $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+          event.preventDefault();
+          $(this).ekkoLightbox({
+            alwaysShowClose: true
+          });
+        });
+      })
+    </script>
 {% endblock %}

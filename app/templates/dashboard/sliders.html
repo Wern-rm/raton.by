@@ -73,7 +73,9 @@
                                 {% for i in data %}
                                     <tr>
                                         <td>{{ loop.index }}</td>
-                                        <td><a target="_blank" href="{{ url_for('static', filename=i.url) }}">Изображение</a></td>
+                                        <td>
+                                            <a href="{{ url_for('static', filename=i.url) }}" data-toggle="lightbox">{{ i.url }}</a>
+                                        </td>
                                         <td>
                                             {% if i.status == 0 %}
                                                 <span class="badge badge-danger">Не активирован</span>
@@ -124,4 +126,23 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/ekko-lightbox.css') }}">
+{% endblock %}
+
+{% block js %}
+    <script src="{{ url_for('static', filename='dashboard/js/ekko-lightbox.min.js') }}"></script>
+    <script>
+      $(function () {
+        $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+          event.preventDefault();
+          $(this).ekkoLightbox({
+            alwaysShowClose: true
+          });
+        });
+      })
+    </script>
 {% endblock %}

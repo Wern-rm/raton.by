@@ -114,7 +114,9 @@
                                 <tr>
                                     <td>{{ loop.index }}</td>
                                     <td>{{ i.name }}</td>
-                                    <td><a target="_blank" href="{{ url_for('static', filename=i.url) }}">скан отзыва</a></td>
+                                    <td>
+                                        <a href="{{ url_for('static', filename=i.url) }}" data-toggle="lightbox">{{ i.url }}</a>
+                                    </td>
                                     <td>
                                         {% if i.status == 0 %}
                                             <i class="fas fa-check-circle text-danger" title="Отзыв не отображается"></i>

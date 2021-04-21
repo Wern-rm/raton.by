@@ -20,18 +20,44 @@
         <div class="col-lg-3 col-6">
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3>{{ api_count }}</h3>
-                    <p>API методов</p>
+                    <h3>{{ items_count }}</h3>
+                    <p>Продуктов в каталоге</p>
                 </div>
                 <div class="icon">
-                    <i class="fas fa-coins"></i>
+                    <i class="fas fa-box-open"></i>
                 </div>
-                <a href="#" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ url_for('dashboard.items') }}" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
 
         <div class="col-lg-3 col-6">
             <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>{{ electron_questions_count }}</h3>
+                    <p>Электронных обращений</p>
+                </div>
+                <div class="icon">
+                    <i class="far fa-comment-dots"></i>
+                </div>
+                  <a href="{{ url_for('dashboard.questions') }}" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-primary">
+                <div class="inner">
+                    <h3>{{ item_applications_count }}</h3>
+                    <p>Заявок на продукцию</p>
+                  </div>
+                <div class="icon">
+                    <i class="fas fa-mouse-pointer"></i>
+                </div>
+                <a href="{{ url_for('dashboard.questions') }}" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-danger">
                 <div class="inner">
                     <h3>{{ user_count }}</h3>
                     <p>Пользователей</p>
@@ -39,33 +65,99 @@
                 <div class="icon">
                     <i class="fas fa-users"></i>
                 </div>
-                  <a href="#" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
+                  <a href="{{ url_for('dashboard.users') }}" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
 
-        <div class="col-lg-3 col-6">
-            <div class="small-box bg-primary">
-                <div class="inner">
-                    <h3>{# {{ request_day_count }} #} 0</h3>
-                    <p>Запросов к API в сутки</p>
-                  </div>
-                <div class="icon">
-                    <i class="fas fa-mouse-pointer"></i>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Последние публикации</h3>
+                    <div class="card-tools">
+                        <a class="btn btn-outline-primary btn-sm" href="{{ url_for('dashboard.news') }}">Смотреть все</a>
+                    </div>
                 </div>
-                <a href="#" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Заголовок</th>
+                                <th>Категория</th>
+                                <th>Просмотров</th>
+                                <th>Статус</th>
+                                <th>Дата добавления</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in news %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>
+                                        <a href="#" target="_blank">{{ i.title }}</a>
+                                    </td>
+                                    <td>
+                                        {% for j in news_category if j.id == i.category_id %}
+                                            {{ j.name }}
+                                        {% endfor %}
+                                    </td>
+                                    <td>{{ i.views }}</td>
+                                    <td>
+                                        {% if i.status == 0 %}
+                                            <i class="fas fa-check-circle text-danger" title="Не отображается"></i>
+                                        {% else %}
+                                            <i class="fas fa-check-circle text-success" title="Отображается"></i>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ i.create_date.strftime("%d.%m.%Y %H:%M") }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
-        <div class="col-lg-3 col-6">
-            <div class="small-box bg-danger">
-                <div class="inner">
-                    <h3>{{ used_api_count }}</h3>
-                    <p>Подключенных API</p>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Последние заявки на продукцию</h3>
+                    <div class="card-tools">
+                        <a class="btn btn-outline-primary btn-sm" href="{{ url_for('dashboard.questions') }}">Смотреть все</a>
+                    </div>
                 </div>
-                <div class="icon">
-                    <i class="far fa-hdd"></i>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Имя</th>
+                                <th>Телефон</th>
+                                <th>Email</th>
+                                <th>Статус</th>
+                                <th>Дата добавления</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in item_applications %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ i.name }}</td>
+                                    <td>{{ i.phone }}</td>
+                                    <td>{{ i.email }}</td>
+                                    <td>
+                                        {% if i.status == 0 %}
+                                            <i class="fas fa-check-circle text-danger" title="Не обработан"></i>
+                                        {% else %}
+                                            <i class="fas fa-check-circle text-success" title="Обработан"></i>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ i.create_date.strftime("%d.%m.%Y %H:%M") }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
-                  <a href="#" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
 
