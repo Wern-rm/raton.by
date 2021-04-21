@@ -62,10 +62,10 @@ def clients(**kwargs):
             return redirect(url_for('dashboard.clients', action='error', id=999))
 
     form_edit_photo = ClientsEditPhotoForm()
-    if form_edit.validate_on_submit() and request.form['form-id'] == '3':
+    if form_edit_photo.validate_on_submit() and request.form['form-id'] == '3':
         try:
             client_id = int(request.form['client-id'])
-            filename = uploader.save(file=form.file.data)
+            filename = uploader.save(file=form_edit_photo.file.data)
             file_url = uploader.get_path(filename=filename)
             old = db.session.query(Clients).filter(Clients.id == client_id).first()
             if os.path.exists(os.path.join(current_app.config.get('STATIC_APP'), old.url)):

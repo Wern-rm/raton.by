@@ -62,10 +62,10 @@ def leaderships(**kwargs):
             return redirect(url_for('dashboard.leaderships', action='error', id=999))
 
     form_edit_photo = LeadershipsEditPhotoForm()
-    if form_edit.validate_on_submit() and request.form['form-id'] == '3':
+    if form_edit_photo.validate_on_submit() and request.form['form-id'] == '3':
         try:
             leadership_id = int(request.form['leadership-id'])
-            filename = uploader.save(file=form.file.data)
+            filename = uploader.save(file=form_edit_photo.file.data)
             file_url = uploader.get_path(filename=filename)
             old = db.session.query(Leaderships).filter(Leaderships.id == leadership_id).first()
             if os.path.exists(os.path.join(current_app.config.get('STATIC_APP'), old.url)):

@@ -1,0 +1,377 @@
+{% extends "dashboard/base.html" %}
+
+{% block description %}
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0">Управление новостями</h1>
+        </div>
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item active"><a href="{{ url_for('dashboard.index') }}">Панель управления</a></li>
+                <li class="breadcrumb-item active">Новости</li>
+            </ol>
+         </div>
+    </div>
+{% endblock %}
+
+{% block css %}
+    {{ ckeditor.load() }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Список новостных категорий</h3>
+                    <div class="card-tools">
+                        <a class="btn btn-outline-success btn-sm" href="#" data-toggle="modal" data-target="#create-new-category">Добавить категорию</a>
+                        <div class="modal fade" tabindex="-1" role="dialog" id="create-new-category">
+                            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Добавление новой категории</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form class="" method="post">
+                                        {{ form_category.hidden_tag() }}
+                                        <input type="hidden" name="form-id" value="4">
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label>Название</label>
+                                                <input type="text" id="name" name="name" class="form-control {% if form_category.name.errors %} is-invalid {% endif %}">
+                                                {% if form_category.name.errors %}
+                                                    <div class="invalid-feedback" style="display: block;">
+                                                        {{ form_category.name.errors[0] }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                            <button type="submit" class="btn btn-outline-success float-right">Добавить</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Название</th>
+                                <td>ID категории</td>
+                                <th>Дата добавления</th>
+                                <th>Опции</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in category %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ i.name }}</td>
+                                    <td>{{ i.id }}</td>
+                                    <td>{{ i.create_date.strftime("%d.%m.%Y %H:%M") }}</td>
+                                    <td>
+                                        <div>
+                                            <a href="#" class="pl-1" data-toggle="modal" data-target="#edit-new-category-{{ i.id }}" title="Изменить">
+                                                <i class="fas fa-pen text-info"></i>
+                                            </a>
+                                            <a href="#" class="pl-1" data-toggle="modal" data-target="#delete-new-category-{{ i.id }}" title="Удалить">
+                                                <i class="fas fa-trash-alt text-danger"></i>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            {# Изменить #}
+                                            <div class="modal fade" tabindex="-1" role="dialog" id="edit-new-category-{{ i.id }}">
+                                                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Изменение категории - {{ i.name }}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <form class="" method="post">
+                                                            {{ form_edit_category.hidden_tag() }}
+                                                            <input type="hidden" name="form-id" value="5">
+                                                            <input type="hidden" name="category-id" value="{{ i.id }}">
+                                                            <div class="modal-body">
+                                                                <div class="form-group">
+                                                                    <label>Название</label>
+                                                                    <input type="text" id="name" name="name" class="form-control {% if form_edit_category.name.errors %} is-invalid {% endif %}" value="{{ i.name }}">
+                                                                    {% if form_edit_category.name.errors %}
+                                                                        <div class="invalid-feedback" style="display: block;">
+                                                                            {{ form_edit_category.name.errors[0] }}
+                                                                        </div>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                                                <button type="submit" class="btn btn-outline-success float-right">Изменить</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {# Удалить #}
+                                            <div class="modal fade" tabindex="-1" role="dialog" id="delete-new-category-{{ i.id }}">
+                                                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Удаление новостной категории - {{ i.name }}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Удалить категорию - "{{ i.name }}"?</p>
+                                                            <p>Данное действие невозможно отменить.</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                                            <a href="{{ url_for('dashboard.new_category_delete', category_id=i.id) }}" class="btn btn-danger">Удалить</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Список новостей</h3>
+                    <div class="card-tools">
+                        <a class="btn btn-outline-success btn-sm" href="#" data-toggle="modal" data-target="#create-new">Добавить новость</a>
+                        <div class="modal fade" tabindex="-1" role="dialog" id="create-new">
+                            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Добавление новой новости</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form class="" method="post" enctype="multipart/form-data">
+                                        {{ form.hidden_tag() }}
+                                        <input type="hidden" name="form-id" value="1">
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label>Заголовок новости</label>
+                                                <input type="text" id="title" name="title" class="form-control {% if form.title.errors %} is-invalid {% endif %}">
+                                                {% if form.title.errors %}
+                                                    <div class="invalid-feedback" style="display: block;">
+                                                        {{ form.title.errors[0] }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form.category.label() }}
+                                                {{ form.category() }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form.text.label() }}
+                                                {{ form.text() }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form.file.label() }}
+                                                {{ form.file() }}
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                            <button type="submit" class="btn btn-outline-success float-right">Добавить</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Заголовок</th>
+                                <th>Категория</th>
+                                <th>Просмотров</th>
+                                <th>Изображение</th>
+                                <th>Статус</th>
+                                <th>Дата добавления</th>
+                                <th>Опции</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in news %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td><a href="#">{{ i.title }}</a></td>
+                                    <td>
+                                        {% for j in category if j.id == i.category_id %}
+                                            {{ j.name }}
+                                        {% endfor %}
+                                    </td>
+                                    <td>{{ i.views }} <i class="fas fa-eye"></i></td>
+                                    <td><a target="_blank" href="{{ url_for('static', filename=i.image) }}">Изображение</a></td>
+                                    <td>
+                                        {% if i.status == 0 %}
+                                            <i class="fas fa-check-circle text-danger" title="Не отображается"></i>
+                                        {% else %}
+                                            <i class="fas fa-check-circle text-success" title="Отображается"></i>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ i.create_date.strftime("%d.%m.%Y %H:%M") }}</td>
+                                    <td>
+                                        <div>
+                                            <a href="#" class="pl-1" data-toggle="modal" data-target="#edit-new-{{ i.id }}" title="Изменить">
+                                                <i class="fas fa-pen text-info"></i>
+                                            </a>
+                                            <a href="#" class="pl-1" data-toggle="modal" data-target="#edit-photo-new-{{ i.id }}" title="Изменить изображение">
+                                                <i class="far fa-file-image"></i>
+                                            </a>
+                                            {% if i.status == 0 %}
+                                                <a href="{{ url_for('dashboard.new_activated', new_id=i.id, status=1) }}" class="pl-1" title="Отобразить">
+                                                    <i class="far fa-eye text-success"></i>
+                                                </a>
+                                            {% else %}
+                                                <a href="{{ url_for('dashboard.new_activated', new_id=i.id, status=0) }}" class="pl-1" title="Скрыть">
+                                                    <i class="far fa-eye text-danger"></i>
+                                                </a>
+                                            {% endif %}
+                                            <a href="#" class="pl-1" data-toggle="modal" data-target="#delete-new-{{ i.id }}" title="Удалить">
+                                                <i class="fas fa-trash-alt text-danger"></i>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            {# Изменить #}
+                                            <div class="modal fade" tabindex="-1" role="dialog" id="edit-new-{{ i.id }}">
+                                                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Изменение страницы - {{ i.name }}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <form class="" method="post">
+                                                            {{ form_edit.hidden_tag() }}
+                                                            <input type="hidden" name="form-id" value="2">
+                                                            <input type="hidden" name="new2-id" value="{{ i.id }}">
+                                                            <div class="modal-body">
+                                                                <div class="form-group">
+                                                                    <label>Заголовок новости</label>
+                                                                    <input type="text" id="title" name="title" class="form-control {% if form_edit.title.errors %} is-invalid {% endif %}" value="{{ i.title }}">
+                                                                    {% if form_edit.title.errors %}
+                                                                        <div class="invalid-feedback" style="display: block;">
+                                                                            {{ form_edit.title.errors[0] }}
+                                                                        </div>
+                                                                    {% endif %}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    {{ form_edit.category.label(value=i.category_id) }}
+                                                                    {{ form_edit.category() }}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    {{ form_edit.text.label() }}
+                                                                    <textarea class="ckeditor " id="text" name="text" style="visibility: hidden; display: none;">{{ i.text }}</textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                                                <button type="submit" class="btn btn-outline-success float-right">Изменить</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {# новое фото #}
+                                            <div class="modal fade" tabindex="-1" role="dialog" id="edit-photo-new-{{ i.id }}">
+                                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Изменение фотографии новости - {{ i.title }}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <form class="" method="post" enctype="multipart/form-data">
+                                                            {{ form_new_edit_photo.hidden_tag() }}
+                                                            <input type="hidden" name="form-id" value="3">
+                                                            <input type="hidden" name="new-id" value="{{ i.id }}">
+                                                            <div class="modal-body">
+                                                                <div class="form-group">
+                                                                    {{ form_new_edit_photo.file.label() }}
+                                                                    {{ form_new_edit_photo.file() }}
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                                                <button type="submit" class="btn btn-outline-success float-right">Загрузить новый логотип</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {# Удалить #}
+                                            <div class="modal fade" tabindex="-1" role="dialog" id="delete-new-{{ i.id }}">
+                                                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Удаление новости - {{ title }}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Удалить новости - "{{ i.title }}"?</p>
+                                                            <p>Данное действие невозможно отменить.</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                                            <a href="{{ url_for('dashboard.new_delete', new_id=i.id) }}" class="btn btn-danger">Удалить</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer clearfix">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="float-left">
+                                {{ pagination.info }}
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="float-right">
+                                {{ pagination.links }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
