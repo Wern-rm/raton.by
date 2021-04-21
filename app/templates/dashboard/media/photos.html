@@ -1,0 +1,165 @@
+{% extends "dashboard/base.html" %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/ekko-lightbox.css') }}">
+{% endblock %}
+
+{% block js %}
+    <script src="{{ url_for('static', filename='dashboard/js/ekko-lightbox.min.js') }}"></script>
+    <script>
+      $(function () {
+        $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+          event.preventDefault();
+          $(this).ekkoLightbox({
+            alwaysShowClose: true
+          });
+        });
+      })
+    </script>
+{% endblock %}
+
+{% block description %}
+    <div class="row mb-2">
+        <div class="col-sm-3">
+            <h1 class="m-0">Управление Каталогом</h1>
+        </div>
+        <div class="col-sm-9">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{{ url_for('dashboard.index') }}">Панель управления</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('dashboard.media') }}">Медиафайлы</a></li>
+                <li class="breadcrumb-item active">{{ catalog.name }}</li>
+            </ol>
+         </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h4 class="card-title">Фотографии в каталоге</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for i in data %}
+                            <div class="col-sm-2">
+                                <a href="{{ url_for('static', filename=i.url) }}" data-toggle="lightbox" data-title="{{ catalog.name }}" data-gallery="gallery">
+                                    <img src="{{ url_for('static', filename=i.url) }}" class="img-fluid mb-2" alt="{{ catalog.name }}"/>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Список фотографий</h3>
+                    <div class="card-tools">
+                        <a class="btn btn-outline-success btn-sm" href="#" data-toggle="modal" data-target="#create-photo">Добавить новую фотографицю</a>
+                        <div class="modal fade" tabindex="-1" role="dialog" id="create-photo">
+                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Добавление новой фотографии</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form class="" method="post" enctype="multipart/form-data">
+                                        {{ form.hidden_tag() }}
+                                        <input type="hidden" name="form-id" value="1">
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                {{ form.file.label() }}
+                                                {{ form.file() }}
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                            <button type="submit" class="btn btn-outline-success float-right">Добавить</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Фотография отзыва</th>
+                                <th>Статус</th>
+                                <th>Дата добавления</th>
+                                <th>Опции</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in data %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td><a target="_blank" href="{{ url_for('static', filename=i.url) }}">Изображение</a></td>
+                                    <td>
+                                        {% if i.status == 0 %}
+                                            <i class="fas fa-check-circle text-danger" title="Отзыв не отображается"></i>
+                                        {% else %}
+                                            <i class="fas fa-check-circle text-success" title="Отзыв отображается"></i>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ i.create_date.strftime("%d.%m.%Y %H:%M") }}</td>
+                                    <td>
+                                        <a href="{{ url_for('dashboard.photo_activated_general', photo_id=i.id,catalog_id=catalog.id) }}" class="pl-1" title="Сделать изображением каталога">
+                                            <i class="far fa-check-circle text-primary"></i>
+                                        </a>
+                                        {% if i.status == 0 %}
+                                            <a href="{{ url_for('dashboard.photo_activated', photo_id=i.id, status=1, catalog_id=catalog.id) }}" class="pl-1" title="Отобразить">
+                                                <i class="far fa-eye text-success"></i>
+                                            </a>
+                                        {% else %}
+                                            <a href="{{ url_for('dashboard.photo_activated', photo_id=i.id, status=0, catalog_id=catalog.id) }}" class="pl-1" title="Скрыть">
+                                                <i class="far fa-eye text-danger"></i>
+                                            </a>
+                                        {% endif %}
+                                        <a href="#" class="pl-1" data-toggle="modal" data-target="#delete-photo-{{ i.id }}" title="Удалить">
+                                            <i class="fas fa-trash-alt text-danger"></i>
+                                        </a>
+                                        {# Удалить клиента #}
+                                        <div class="modal fade" tabindex="-1" role="dialog" id="delete-photo-{{ i.id }}">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Удаление фотографии</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Удалить фотографию?</p>
+                                                        <p>Данное действие невозможно отменить.</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                                        <a href="{{ url_for('dashboard.photo_delete', photo_id=i.id, catalog_id=catalog.id) }}" class="btn btn-danger">Удалить</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+

@@ -1,0 +1,327 @@
+{% extends 'dashboard/base.html' %}
+
+{% block description %}
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0">Управление Медиафайлы</h1>
+        </div>
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item active"><a href="{{ url_for('dashboard.index') }}">Панель управления</a></li>
+                <li class="breadcrumb-item active">Медиафайлы</li>
+            </ol>
+         </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Каталоги фотогалереи</h3>
+                    <div class="card-tools">
+                        <a class="btn btn-outline-success btn-sm" href="#" data-toggle="modal" data-target="#create-photo-catalog">Добавить</a>
+                        <div class="modal fade" tabindex="-1" role="dialog" id="create-photo-catalog">
+                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Добавление нового каталога фотографий</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form class="" method="post">
+                                        {{ form.hidden_tag() }}
+                                        <input type="hidden" name="form-id" value="1">
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label>Название каталога</label>
+                                                <input type="text" id="name" name="name" class="form-control {% if form.name.errors %} is-invalid {% endif %}">
+                                                {% if form.name.errors %}
+                                                    <div class="invalid-feedback" style="display: block;">
+                                                        {{ form.name.errors[0] }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                            <button type="submit" class="btn btn-outline-success float-right">Добавить</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Название</th>
+                                <th>Статус</th>
+                                <th>Каталог</th>
+                                <th>Опции</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in photo_catalogs %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ i.name }}</td>
+                                    <td>
+                                        {% if i.status == 0 %}
+                                            <i class="fas fa-check-circle text-danger" title="Не Отображается"></i>
+                                        {% else %}
+                                            <i class="fas fa-check-circle text-success" title="Клиент отображается"></i>
+                                        {% endif %}
+                                    </td>
+                                    <td><a href="{{ url_for('dashboard.media_photos', catalog_id=i.id) }}" class="btn btn-sm btn-info">Перейти в каталог</a></td>
+                                    <td>
+                                        <div>
+                                            <a href="#" class="pl-1" data-toggle="modal" data-target="#edit-client-{{ i.id }}" title="Изменить наименование">
+                                                <i class="fas fa-pen text-info"></i>
+                                            </a>
+                                            {% if i.status == 0 %}
+                                                <a href="{{ url_for('dashboard.media_activated', catalog_id=i.id, status=1) }}" class="pl-1" title="Отобразить">
+                                                    <i class="far fa-eye text-success"></i>
+                                                </a>
+                                            {% else %}
+                                                <a href="{{ url_for('dashboard.media_activated', catalog_id=i.id, status=0) }}" class="pl-1" title="Скрыть">
+                                                    <i class="far fa-eye text-danger"></i>
+                                                </a>
+                                            {% endif %}
+                                            <a href="#" class="pl-1" data-toggle="modal" data-target="#delete-client-{{ i.id }}" title="Удалить"><i class="fas fa-trash-alt text-danger"></i></a>
+                                        </div>
+                                        <div>
+                                            {# Изменить данные #}
+                                            <div class="modal fade" tabindex="-1" role="dialog" id="edit-client-{{ i.id }}">
+                                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Изменение клиента - {{ i.name }}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <form class="" method="post">
+                                                            {{ form_edit.hidden_tag() }}
+                                                            <input type="hidden" name="form-id" value="2">
+                                                            <input type="hidden" name="catalog-id" value="{{ i.id }}">
+                                                            <div class="modal-body">
+                                                                <div class="form-group">
+                                                                    <label>Название каталога</label>
+                                                                    <input type="text" id="name" name="name" class="form-control {% if form_edit.name.errors %} is-invalid {% endif %}" value="{{ i.name }}">
+                                                                    {% if form_edit.name.errors %}
+                                                                        <div class="invalid-feedback" style="display: block;">
+                                                                            {{ form_edit.name.errors[0] }}
+                                                                        </div>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                                                <button type="submit" class="btn btn-outline-success float-right">Изменить</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {# Удалить клиента #}
+                                            <div class="modal fade" tabindex="-1" role="dialog" id="delete-client-{{ i.id }}">
+                                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Удаление каталога</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Удалить каталога с фотографиями - "{{ i.name }}"?</p>
+                                                            <p>Каталог невозможно будет удалить, если в нем находятся изображения. Сначала удалите изображения, потом каталог.</p>
+                                                            <p>Данное действие невозможно отменить.</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                                            <a href="{{ url_for('dashboard.media_delete', catalog_id=i.id) }}" class="btn btn-danger">Удалить</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer clearfix">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="float-left">
+                                {{ pagination_photo.info }}
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="float-right">
+                                {{ pagination_photo.links }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Список видео</h3>
+                    <div class="card-tools">
+                        <a class="btn btn-outline-success btn-sm" href="#" data-toggle="modal" data-target="#create-video">Добавить новое видео</a>
+                        <div class="modal fade" tabindex="-1" role="dialog" id="create-video">
+                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Добавление нового видео</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form class="" method="post">
+                                        {{ form_video.hidden_tag() }}
+                                        <input type="hidden" name="form-id" value="3">
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label>Название видео</label>
+                                                <input type="text" id="name" name="name" class="form-control {% if form_video.name.errors %} is-invalid {% endif %}">
+                                                {% if form_video.name.errors %}
+                                                    <div class="invalid-feedback" style="display: block;">
+                                                        {{ form_video.name.errors[0] }}
+                                                    </div>
+                                                {% endif %}
+                                                <label>Youtube URL</label>
+                                                <input type="text" id="url" name="url" class="form-control {% if form_video.url.errors %} is-invalid {% endif %}">
+                                                {% if form_video.url.errors %}
+                                                    <div class="invalid-feedback" style="display: block;">
+                                                        {{ form_video.url.errors[0] }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                            <button type="submit" class="btn btn-outline-success float-right">Добавить</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Видео</th>
+                                <th>Статус</th>
+                                <th>Дата добавления</th>
+                                <th>Опции</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in videos %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>
+                                        <a href="{{ i.url }}" data-toggle="lightbox">{{ i.name }}</a>
+                                    </td>
+                                    <td>
+                                        {% if i.status == 0 %}
+                                            <i class="fas fa-check-circle text-danger" title="Отзыв не отображается"></i>
+                                        {% else %}
+                                            <i class="fas fa-check-circle text-success" title="Отзыв отображается"></i>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ i.create_date.strftime("%d.%m.%Y %H:%M") }}</td>
+                                    <td>
+                                        {% if i.status == 0 %}
+                                            <a href="{{ url_for('dashboard.video_activated', video_id=i.id, status=1) }}" class="pl-1" title="Отобразить">
+                                                <i class="far fa-eye text-success"></i>
+                                            </a>
+                                        {% else %}
+                                            <a href="{{ url_for('dashboard.video_activated', video_id=i.id, status=0) }}" class="pl-1" title="Скрыть">
+                                                <i class="far fa-eye text-danger"></i>
+                                            </a>
+                                        {% endif %}
+                                        <a href="#" class="pl-1" data-toggle="modal" data-target="#delete-video-{{ i.id }}" title="Удалить">
+                                            <i class="fas fa-trash-alt text-danger"></i>
+                                        </a>
+                                        {# Удалить клиента #}
+                                        <div class="modal fade" tabindex="-1" role="dialog" id="delete-video-{{ i.id }}">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Удаление видео</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Удалить видео - {{ i.name }}?</p>
+                                                        <p>Данное действие невозможно отменить.</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                                        <a href="{{ url_for('dashboard.video_delete', video_id=i.id) }}" class="btn btn-danger">Удалить</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer clearfix">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="float-left">
+                                {{ pagination_video.info }}
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="float-right">
+                                {{ pagination_video.links }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/ekko-lightbox.css') }}">
+{% endblock %}
+
+{% block js %}
+    <script src="{{ url_for('static', filename='dashboard/js/ekko-lightbox.min.js') }}"></script>
+    <script>
+      $(function () {
+        $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+          event.preventDefault();
+          $(this).ekkoLightbox({
+            alwaysShowClose: true
+          });
+        });
+      })
+    </script>
+{% endblock %}

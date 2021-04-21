@@ -109,9 +109,11 @@
                                             {% if i.status == 0 %}
                                                 <a href="{{ url_for('dashboard.client_activated', client_id=i.id, status=1) }}" class="pl-1" title="Отобразить">
                                                     <i class="far fa-eye text-success"></i>
+                                                </a>
                                             {% else %}
                                                 <a href="{{ url_for('dashboard.client_activated', client_id=i.id, status=0) }}" class="pl-1" title="Скрыть">
                                                     <i class="far fa-eye text-danger"></i>
+                                                </a>
                                             {% endif %}
                                             <a href="#" class="pl-1" data-toggle="modal" data-target="#delete-client-{{ i.id }}" title="Удалить"><i class="fas fa-trash-alt text-danger"></i></a>
                                         </div>
