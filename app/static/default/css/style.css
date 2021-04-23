@@ -1,0 +1,71 @@
+.navbar-color-bg {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    background: linear-gradient(to right, #008be3 0%, #0147a7 100%)
+}
+.navbar-size {
+    font-weight: 400!important;
+    font-size: 17px;
+}
+.navbar-li-p {
+    padding-left: 15px !important;
+}
+.navbar-height {
+    min-height: 60px !important;
+}
+.page-title h3 {
+    color: #0157b5 !important;
+}
+.page-header {
+    margin: 10px 0 20px;
+    border-bottom: 1px solid #eee;
+}
+.bottom_border {
+    border-bottom: 1px solid #eee;
+    padding-bottom:20px;
+}
+footer {
+    background: linear-gradient(to right, #008be3 0%, #0147a7 100%);
+    min-height:250px;
+    padding:10px 0 5px 0;
+}
+.general-bg {
+    background: linear-gradient(to right, #008be3 0%, #0147a7 100%) !important;
+}
+
+
+.col_white_amrc { color:#FFF;}
+.pt2 { padding-top:40px ; margin-bottom:20px ;}
+footer p { font-size:13px; color:#CCC; padding-bottom:0px; margin-bottom:8px;}
+.mb10 { padding-bottom:15px ;}
+.footer_ul_amrc { margin:0px ; list-style-type:none ; font-size:14px; padding:0px 0px 10px 0px ; }
+.footer_ul_amrc li {padding:0px 0px 5px 0px;}
+.footer_ul_amrc li a{ color:#CCC;}
+.footer_ul_amrc li a:hover{ color:#fff; text-decoration:none;}
+.fleft { float:left;}
+.padding-right { padding-right:10px; }
+
+.footer_ul2_amrc {margin:0px; list-style-type:none; padding:0px;}
+.footer_ul2_amrc li p { display:table; }
+.footer_ul2_amrc li a:hover { text-decoration:none;}
+.footer_ul2_amrc li i { margin-top:5px;}
+
+
+.foote_bottom_ul_amrc {
+	list-style-type:none;
+	padding:0px;
+	display:table;
+	margin-top: 10px;
+	margin-right: auto;
+	margin-bottom: 10px;
+	margin-left: auto;
+}
+.foote_bottom_ul_amrc li { display:inline;}
+
+
+.social_footer_ul { display:table; margin:15px auto 0 auto; list-style-type:none;  }
+.social_footer_ul li { padding-left:20px; padding-top:10px; float:left; }
+.social_footer_ul li a { color:#CCC; border:1px solid #CCC; padding:8px;border-radius:50%;}
+.social_footer_ul li i {  width:20px; height:20px; text-align:center;}

@@ -22,8 +22,9 @@ def clients(**kwargs):
     page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
 
     form = ClientsForm()
-    uploader = UploadFiles(basedir=current_app.config.get('STATIC_APP'), storage='uploads', extensions=IMAGES)
+
     if form.validate_on_submit() and request.form['form-id'] == '1':
+        uploader = UploadFiles(basedir=current_app.config.get('STATIC_APP'), storage='uploads', extensions=IMAGES, rename_full=True)
         try:
             found = db.session.query(Clients).filter(Clients.name == form.name.data).first()
             if not found:
@@ -64,6 +65,7 @@ def clients(**kwargs):
     form_edit_photo = ClientsEditPhotoForm()
     if form_edit_photo.validate_on_submit() and request.form['form-id'] == '3':
         try:
+            uploader = UploadFiles(basedir=current_app.config.get('STATIC_APP'), storage='uploads', extensions=IMAGES)
             client_id = int(request.form['client-id'])
             filename = uploader.save(file=form_edit_photo.file.data)
             file_url = uploader.get_path(filename=filename)

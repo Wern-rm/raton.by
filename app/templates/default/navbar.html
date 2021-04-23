@@ -1,10 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<nav class="navbar navbar-expand-md navbar-light mb-4 navbar-color-bg">
+    <a class="navbar-brand d-lg-none d-md-none text-white" href="{{ url_for('main.index') }}">ОАО «Ратон»</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mx-auto">
+            <li class="nav-item navbar-li-p active">
+                <a class="nav-link text-white navbar-size" href="{{ url_for('main.index') }}">Главная</a>
+            </li>
+            <li class="nav-item navbar-li-p">
+                <a class="nav-link text-white navbar-size" href="#">Продукция</a>
+            </li>
+            <li class="nav-item navbar-li-p">
+                <a class="nav-link text-white navbar-size" href="#">Услуги</a>
+            </li>
+            <li class="nav-item navbar-li-p">
+                <a class="nav-link text-white navbar-size" href="#">Где купить</a>
+            </li>
+            <li class="nav-item navbar-li-p dropdown">
+                <a class="nav-link dropdown-toggle text-white navbar-size" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">О предприятии</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item" href="#">История</a>
+                    <a class="dropdown-item" href="#">Руководство</a>
+                    <a class="dropdown-item" href="#">Производство</a>
+                    <a class="dropdown-item" href="#">Клиенты</a>
+                    <a class="dropdown-item" href="#">Отзывы</a>
+                    <a class="dropdown-item" href="#">Противодействие коррупции</a>
+                </div>
+            </li>
+            <li class="nav-item navbar-li-p dropdown">
+                <a class="nav-link dropdown-toggle text-white navbar-size" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Пресс-центр</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item" href="#">Публикации</a>
+                    <a class="dropdown-item" href="#">Документы</a>
+                    <a class="dropdown-item" href="#">Фото материалы</a>
+                    <a class="dropdown-item" href="#">Видео материалы</a>
+                    <a class="dropdown-item" href="#">Вакансии</a>
+                </div>
+            </li>
+            <li class="nav-item navbar-li-p dropdown">
+                <a class="nav-link dropdown-toggle text-white navbar-size" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Контакты</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item" href="#">Контакты</a>
+                    <a class="dropdown-item" href="#">Электронное обращение</a>
+                    <a class="dropdown-item" href="#">Личный прием</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>

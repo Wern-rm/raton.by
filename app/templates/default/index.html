@@ -1,10 +1,111 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "default/base.html" %}
 
-</body>
-</html>
+{% block content %}
+
+    <div class="container">
+        <div class="col-lg-12 col-md-12 col-sm-12 mb-5">
+            <div class="row">
+
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div id="carousel" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            {% for i in sliders %}
+                                <li data-target="#carousel" data-slide-to="{{ loop.index0 }}" class="{% if loop.index0 == 0 %}active{% endif %}"></li>
+                            {% endfor %}
+                        </ol>
+                        <div class="carousel-inner">
+                            {% for i in sliders %}
+                                <div class="carousel-item {% if loop.index0 == 0 %}active{% endif %}">
+                                    <img class="d-block w-100" src="{{ url_for('static', filename=i.url) }}" alt="i.url">
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Предыдущий</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Следующий</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="page-title page-header">
+                        <h3>Наша продукция</h3>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+                    <div class="row">
+
+                        {% for i in category %}
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                <a href="#" class="card" style="text-decoration: none;">
+                                    <img src="{{ url_for('static', filename=i.image) }}" class="card-img-top" alt="{{ i.image }}">
+                                    <div class="card-body align-middle" style="border-top: 1px solid rgba(0,0,0,.125); min-height: 160px !important;">
+                                        <p class="card-title text-center" style="font-size: 17px; font-weight: 500; color: #1460af !important;">{{ i.title }}</p>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 ">
+                    <div class="page-title page-header">
+                        <h3>Преимущества работы с нами</h3>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 ">
+                    <div class="page-title page-header">
+                        <h3>Наши клиенты</h3>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+                    <div class="multiple-items" role="toolbar">
+
+                        <button type="button" data-role="none" class="slick-prev slick-arrow" aria-label="Previous" role="button" style="display: block;">
+                            <i class="fas fa-2x fa-chevron-left text-black-50"></i>
+                        </button>
+
+                        {% for i in clients %}
+                            <div>
+                                <img style="height: 80px;" src="{{ url_for('static', filename=i.url) }}" alt="{{ i.url }}">
+                            </div>
+                        {% endfor %}
+
+			            <button type="button" data-role="none" class="slick-next slick-arrow" aria-label="Next" role="button" style="display: block;">
+                            <i class="fas fa-2x fa-chevron-right text-black-50"></i>
+                        </button>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='default/css/slick.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='default/css/slick-theme.css') }}">
+{% endblock %}
+
+{% block js %}
+    <script src="{{ url_for('static', filename='default/js/slick.min.js') }}"></script>
+
+    <script>
+        $('.multiple-items').slick({
+            infinite: true,
+            slidesToShow: 6,
+            slidesToScroll: 5
+        });
+    </script>
+{% endblock %}
