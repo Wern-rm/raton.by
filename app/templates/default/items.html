@@ -1,0 +1,65 @@
+{% extends "default/base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="col-lg-12 col-md-12 col-sm-12 mb-5">
+            <div class="row">
+
+                {% if not is_items %}
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="page-title page-header">
+                            <h3>Наша продукция</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+                        <div class="row">
+                            {% for i in category %}
+                                <div class="col-lg-3 col-md-4 col-sm-12 mb-4">
+                                    <a href="{{ url_for('main.items', category_id=i.id) }}" class="card" style="text-decoration: none;">
+                                        {% if i.image != None %}
+                                            <img src="{{ url_for('static', filename=i.image) }}" class="card-img-top" alt="{{ i.image }}">
+                                        {% else %}
+                                            <img src="#" class="card-img-top" alt="{{ i.image }}">
+                                        {% endif %}
+                                        <div class="card-body" style="border-top: 1px solid rgba(0,0,0,.125); min-height: 160px !important;" id="item_block">
+                                            <p id="item_text_block" class="card-title text-center" style="font-size: 17px; font-weight: 500; color: #1460af !important;">{{ i.title }}</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="page-title page-header">
+                            {% for i in category if i.id == category_id %}
+                                <h3>{{ i.title }}</h3>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+                        <div class="row">
+                            {% for i in items %}
+                                <div class="col-lg-3 col-md-4 col-sm-12 mb-4">
+                                    <a href="{{ url_for('main.item', item_id=i.id) }}" class="card" style="text-decoration: none;">
+                                        {% for j in general_images if j.item_id == i.id %}
+                                            <img src="{{ url_for('static', filename=j.url) }}" class="card-img-top" alt="{{ j.url }}">
+                                        {% endfor %}
+                                        <div class="card-body" style="border-top: 1px solid rgba(0,0,0,.125); min-height: 130px !important;" id="item_block">
+                                            <p id="item_text_block" class="card-title text-center" style="font-size: 17px; font-weight: 500; color: #1460af !important;">{{ i.title }}</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

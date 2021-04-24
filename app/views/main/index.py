@@ -14,7 +14,7 @@ from app.models.clients import Clients
 def index(**kwargs):
     kwargs['title'] = 'Главная'
     kwargs['sliders'] = db.session.query(Sliders).filter(Sliders.status == 1).all()
-    kwargs['category'] = db.session.query(ItemsCategory).filter(ItemsCategory.status == 1).all()
+    kwargs['category'] = db.session.query(ItemsCategory).filter(ItemsCategory.status == 1, ItemsCategory.is_popular == 1).all()
     kwargs['clients'] = db.session.query(Clients).filter(Clients.status == 1).order_by(Clients.name).all()
     return render_template("default/index.html", **kwargs)
 

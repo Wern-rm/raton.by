@@ -10,9 +10,11 @@ class ItemsCategory(db.Model):
     image = db.Column(db.VARCHAR(255), nullable=True)
     status = db.Column(db.Integer, nullable=False)
     create_date = db.Column(db.DateTime(), nullable=False)
+    is_popular = db.Column(db.Integer, nullable=False)
 
-    def __init__(self, title, image=None, status=0, create_date=datetime.now()):
+    def __init__(self, title, image=None, status=0, create_date=datetime.now(), is_popular=0):
         self.title = title
         self.image = image
         self.status = status
         self.create_date = create_date
+        self.is_popular = is_popular

@@ -1,7 +1,9 @@
 <div class="container mt-1 mb-1" id="navbar-logo-height">
-    <div class="row mt-3 mb-2">
+    <div class="row mt-4 mb-3">
         <div class="col-3">
-            <img src="{{ url_for('static', filename='default/img/logo.png') }}" width="auto" height="75">
+            <a href="{{ url_for('main.index') }}">
+                <img src="{{ url_for('static', filename='default/img/logo.png') }}" width="auto" height="65">
+            </a>
         </div>
         <div class="col-9">
             <div class="row float-right" id="navbar-logo-map">

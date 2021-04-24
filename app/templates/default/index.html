@@ -6,7 +6,7 @@
         <div class="col-lg-12 col-md-12 col-sm-12 mb-5">
             <div class="row">
 
-                <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12" id="carousel_index">
                     <div id="carousel" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
                             {% for i in sliders %}
@@ -33,7 +33,7 @@
 
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="page-title page-header">
-                        <h3>Наша продукция</h3>
+                        <h3>Популярная продукция</h3>
                     </div>
                 </div>
 
@@ -41,11 +41,15 @@
                     <div class="row">
 
                         {% for i in category %}
-                            <div class="col-lg-3 col-md-4 col-sm-12">
-                                <a href="#" class="card" style="text-decoration: none;">
-                                    <img src="{{ url_for('static', filename=i.image) }}" class="card-img-top" alt="{{ i.image }}">
-                                    <div class="card-body align-middle" style="border-top: 1px solid rgba(0,0,0,.125); min-height: 160px !important;">
-                                        <p class="card-title text-center" style="font-size: 17px; font-weight: 500; color: #1460af !important;">{{ i.title }}</p>
+                            <div class="col-lg-3 col-md-4 col-sm-12 mb-4">
+                                <a href="{{ url_for('main.items', category_id=i.id) }}" class="card" style="text-decoration: none;">
+                                    {% if i.image != None %}
+                                        <img src="{{ url_for('static', filename=i.image) }}" class="card-img-top" alt="{{ i.image }}">
+                                    {% else %}
+                                        <img src="#" class="card-img-top" alt="{{ i.image }}">
+                                    {% endif %}
+                                    <div class="card-body" style="border-top: 1px solid rgba(0,0,0,.125); min-height: 160px !important;" id="item_block">
+                                        <p id="item_text_block" class="card-title text-center" style="font-size: 17px; font-weight: 500; color: #1460af !important;">{{ i.title }}</p>
                                     </div>
                                 </a>
                             </div>
@@ -102,10 +106,18 @@
     <script src="{{ url_for('static', filename='default/js/slick.min.js') }}"></script>
 
     <script>
-        $('.multiple-items').slick({
-            infinite: true,
-            slidesToShow: 6,
-            slidesToScroll: 5
-        });
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            $('.multiple-items').slick({
+                infinite: true,
+                slidesToShow: 2,
+                slidesToScroll: 1
+            });
+        } else {
+            $('.multiple-items').slick({
+                infinite: true,
+                slidesToShow: 6,
+                slidesToScroll: 5
+            });
+        }
     </script>
 {% endblock %}

@@ -34,7 +34,7 @@ def item(item_id: int, **kwargs):
     form_files = ItemsFile()
     if form_files.validate_on_submit() and request.form['form-id'] == '2':
         try:
-            RATON = ['rtf', 'odf', 'ods', 'pdf', 'abw', 'doc', 'docx', 'xls', 'xlsx', 'dwg', 'jpg']
+            RATON = ['rtf', 'odf', 'ods', 'pdf', 'abw', 'doc', 'docx', 'xls', 'xlsx', 'dwg', 'jpg', 'jpeg']
             uploader = UploadFiles(basedir=current_app.config.get('STATIC_APP'), storage='uploads', extensions=RATON)
             filename = uploader.save(file=form_files.file.data)
             file_url = uploader.get_path(filename=filename)

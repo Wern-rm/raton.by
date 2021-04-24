@@ -33,5 +33,16 @@
     <script src="{{ url_for('static', filename='default/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url_for('static', filename='default/js/app.js') }}"></script>
     {% block js %}{% endblock %}
+    <script>
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            document.getElementById('banners_footer').style.display='none';
+            document.getElementById('carousel_index').style.display='none';
+            document.getElementById('navbar-logo-height').style.display='none';
+        } else {
+            document.getElementById('banners_footer').style.display = 'block';
+            document.getElementById('carousel_index').style.display='block';
+            document.getElementById('navbar-logo-height').style.display='block';
+        }
+    </script>
   </body>
 </html>
