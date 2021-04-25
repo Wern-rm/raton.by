@@ -39,9 +39,9 @@
                         <div class="row">
 
                             {% for i in photos %}
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 mb-4">
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 mb-2">
                                     <a href="{{ url_for('static', filename=i.url) }}" data-fancybox="gallery" data-caption="185">
-                                        <img class="img-responsive center-block" src="{{ url_for('static', filename=i.url) }}" style="height: 198px!important;">
+                                        <img class="img-responsive img-thumbnail center-block mx-auto" src="{{ url_for('static', filename=i.url) }}" style="height: 198px!important; border: none!important;">
                                     </a>
                                 </div>
                             {% endfor %}
