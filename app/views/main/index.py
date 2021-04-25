@@ -1,12 +1,11 @@
-import bdb
-
 from flask import render_template
-from app.views.main import bp
-from app.controllers.app_controller import app_controller
-from app.models.sliders import Sliders
+
 from app import db
-from app.models.items_category import ItemsCategory
+from app.controllers.app_controller import app_controller
 from app.models.clients import Clients
+from app.models.items_category import ItemsCategory
+from app.models.sliders import Sliders
+from app.views.main import bp
 
 
 @bp.route('/')

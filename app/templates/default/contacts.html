@@ -1,0 +1,54 @@
+{% extends "default/base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="col-lg-12 col-md-12 col-sm-12 mb-5">
+            <div class="row">
+
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="page-title page-header">
+                        <h3>Наша продукция</h3>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+                    <div class="row">
+
+                        {% for i in contacts %}
+                            <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+                                <div class="card" style="box-shadow: none !important;">
+                                    <div class="card-header" style="color: #0157b5; font-weight: 500;">{{ i.departament }}</div>
+                                    <ul class="list-group list-group-flush">
+                                        {% if i.displaying_boss == 1 %}
+                                            <li class="list-group-item">
+                                                <i class="fas fa-user-tie"></i> {{ i.boss }}
+                                            </li>
+                                        {% endif %}
+                                        {% if i.displaying_phone == 1 %}
+                                            <li class="list-group-item">
+                                                <i class="fas fa-phone-square-alt"></i> Телефон: {{ i.phone }}
+                                            </li>
+                                        {% endif %}
+                                        {% if i.displaying_fax == 1 %}
+                                            <li class="list-group-item">
+                                                <i class="fas fa-fax"></i> Факс: {{ i.fax }}
+                                            </li>
+                                        {% endif %}
+                                        {% if i.displaying_email == 1 %}
+                                            <li class="list-group-item">
+                                                <i class="far fa-envelope"></i> Email: <a href="mailto:{{ i.email }}">{{ i.email }}</a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
