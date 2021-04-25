@@ -29,6 +29,9 @@
                             <a class="nav-link" href="#email" data-toggle="tab">Email</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="#notifications" data-toggle="tab">Уведомления</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="#metrics" data-toggle="tab">Метрики</a>
                         </li>
                         <li class="nav-item">
@@ -43,6 +46,9 @@
                         </div>
                         <div class="tab-pane" id="email">
                             {% include "dashboard/settings/email.html" %}
+                        </div>
+                        <div class="tab-pane" id="notifications">
+                            {% include "dashboard/settings/notification.html" %}
                         </div>
                         <div class="tab-pane" id="metrics">
                             {% include "dashboard/settings/metrics.html" %}

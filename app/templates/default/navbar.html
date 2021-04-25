@@ -42,8 +42,8 @@
                 <a class="nav-link dropdown-toggle text-white navbar-size" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Контакты</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                     <a class="dropdown-item" href="{{ url_for('main.contacts') }}">Контакты</a>
-                    <a class="dropdown-item" href="#">Электронное обращение</a>
-                    <a class="dropdown-item" href="#">Личный прием</a>
+                    <a class="dropdown-item" href="{{ url_for('main.page', alias='personal_reception') }}">Личный прием</a>
+                    <a class="dropdown-item" href="{{ url_for('main.electronic_appeal') }}">Электронное обращение</a>
                 </div>
             </li>
         </ul>

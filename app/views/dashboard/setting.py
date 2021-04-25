@@ -6,7 +6,7 @@ from flask_login import login_required
 from app.controllers.dashboard_controller import dashboard_controller
 from app.views.dashboard import bp
 from app.models.settings import Settings
-from app.forms.dashboard_settings import SettingsForm1, SettingsForm2
+from app.forms.dashboard_settings import SettingsForm1, SettingsForm2, SettingsForm3
 
 
 @bp.route('/setting', methods=['GET', 'POST'])
@@ -25,12 +25,14 @@ def settings(**kwargs):
             db.session.query(Settings).filter(Settings.key == 'PROJECT_STATUS').update({'value': str(form1.setting_2.data)})
             db.session.query(Settings).filter(Settings.key == 'TECHNICAL_WORKS').update({'value': str(form1.setting_3.data)})
             db.session.query(Settings).filter(Settings.key == 'TEMPLATES_AUTO_RELOAD').update({'value': str(form1.setting_4.data)})
+            db.session.query(Settings).filter(Settings.key == 'NOTIFICATION_EMAIL').update({'value': str(form1.setting_5.data)})
             db.session.commit()
             current_app.config.update(
                 PROJECT_NAME=form1.setting_1.data,
                 PROJECT_STATUS=bool(util.strtobool(form1.setting_2.data)),
                 TECHNICAL_WORKS=bool(util.strtobool(form1.setting_3.data)),
-                TEMPLATES_AUTO_RELOAD=bool(util.strtobool(form1.setting_4.data))
+                TEMPLATES_AUTO_RELOAD=bool(util.strtobool(form1.setting_4.data)),
+                NOTIFICATION_EMAIL=form1.setting_5.data
             )
             return redirect(url_for('dashboard.settings', action='success', id=0))
         except Exception as e:
@@ -69,10 +71,29 @@ def settings(**kwargs):
             logger.error(e)
             db.session.rollback()
             return redirect(url_for('dashboard.settings', action='error', id=4))
+    # Notifications
+    form3 = SettingsForm3(setting_1=current_app.config.get('NOTIFICATIONS_STATUS'))
+    form3.setting_1.choices = [("False", "Disable"), ("True", "Enable")]
+    if form3.validate_on_submit() and request.form['form-id'] == '3':
+        try:
+            db.session.query(Settings).filter(Settings.key == 'NOTIFICATIONS_STATUS').update({'value': str(form3.setting_1.data)})
+            db.session.query(Settings).filter(Settings.key == 'NOTIFICATION_EMAIL').update({'value': str(form3.setting_2.data)})
+            db.session.commit()
+            current_app.config.update(
+                NOTIFICATIONS_STATUS=bool(util.strtobool(form3.setting_1.data)),
+                NOTIFICATION_EMAIL=form3.setting_2.data
+            )
+            return redirect(url_for('dashboard.settings', action='success', id=0))
+        except Exception as e:
+            logger.error(e)
+            db.session.rollback()
+            return redirect(url_for('dashboard.settings', action='error', id=3))
     kwargs['title'] = 'Управление настройками'
     kwargs['form1'] = form1
     kwargs['form2'] = form2
+    kwargs['form3'] = form3
     kwargs['PROJECT_NAME'] = current_app.config.get('PROJECT_NAME')
+    kwargs['NOTIFICATION_EMAIL'] = current_app.config.get('NOTIFICATION_EMAIL')
     kwargs['MAIL_TITLE'] = current_app.config.get('MAIL_TITLE')
     kwargs['MAIL_SERVER'] = current_app.config.get('MAIL_SERVER')
     kwargs['MAIL_PORT'] = current_app.config.get('MAIL_PORT')

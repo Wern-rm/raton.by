@@ -30,3 +30,10 @@ class SettingsForm2(FlaskForm):
     setting_8 = SelectField('setting_8',
                             coerce=str,
                             validators=[validators.optional()])
+
+
+class SettingsForm3(FlaskForm):
+    setting_1 = SelectField('setting_1',
+                            coerce=str,
+                            validators=[validators.optional()])
+    setting_2 = StringField('setting_2')

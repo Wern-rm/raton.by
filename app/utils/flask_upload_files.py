@@ -13,7 +13,6 @@ import os
 
 from flask import url_for, current_app
 from werkzeug.datastructures import FileStorage
-from werkzeug.utils import secure_filename
 from datetime import datetime
 import hashlib
 
@@ -78,7 +77,7 @@ class UploadFiles(object):
 
         if not os.path.exists(self.path):
             os.mkdir(self.path)
-        filename = lowercase_ext(secure_filename(file.filename))
+        filename = lowercase_ext(custom_secure_filename(file.filename))
         if file:
             if self.extension(filename):
                 if self.rename_full:
@@ -99,7 +98,7 @@ class UploadFiles(object):
 
         if not os.path.exists(self.path):
             os.mkdir(self.path)
-        filename = lowercase_ext(secure_filename(file.filename))
+        filename = lowercase_ext(custom_secure_filename(file.filename))
         if file:
             if self.extension(filename):
                 if self.rename_full:
@@ -132,3 +131,39 @@ class UploadFiles(object):
         :return:
         """
         return self.storage + "/" + filename
+
+
+import sys
+import os
+import re
+
+_windows_device_files = (
+    "CON",
+    "AUX",
+    "COM1",
+    "COM2",
+    "COM3",
+    "COM4",
+    "LPT1",
+    "LPT2",
+    "LPT3",
+    "PRN",
+    "NUL",
+)
+
+_filename_strip_re = re.compile(r"[^A-Za-zа-яА-ЯёЁ0-9_.-]")
+
+
+def custom_secure_filename(filename: str) -> str:
+    if isinstance(filename, str):
+        from unicodedata import normalize
+        filename = normalize("NFKD", filename)
+
+    for sep in os.path.sep, os.path.altsep:
+        if sep:
+            filename = filename.replace(sep, " ")
+    filename = str(_filename_strip_re.sub("", "_".join(filename.split()))).strip("._")
+
+    if os.name == "nt" and filename and filename.split(".")[0].upper() in _windows_device_files:
+        filename = f"_{filename}"
+    return filename
