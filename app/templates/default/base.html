@@ -20,11 +20,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='default/css/override.css') }}">
 
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     {% include "default/logo.html" %}
     {% include "default/navbar.html" %}
 
-    <main role="main">
+    <main role="main" class="wrapper flex-grow-1">
         {% block content %}{% endblock %}
     </main>
 
