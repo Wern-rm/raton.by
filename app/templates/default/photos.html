@@ -1,0 +1,64 @@
+{% extends "default/base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="col-lg-12 col-md-12 col-sm-12 mb-5">
+            <div class="row">
+
+                {% if not is_photos %}
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="page-title page-header">
+                            <h3>Фотогалерея</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+                        <div class="row">
+
+                            {% for i in catalogs %}
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 mb-4">
+                                    <a href="{{ url_for('main.photos', catalog_id=i.id) }}" class="card" style="text-decoration: none;">
+                                        <img src="{{ url_for('static', filename=i.url) }}" class="card-img-top" alt="{{ i.url }}">
+                                        <div class="card-body" style="min-height: 130px !important;" id="item_block">
+                                            <p id="item_text_block" class="card-title text-center" style="font-size: 17px; font-weight: 500; color: #1460af !important;">{{ i.name }}</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="page-title page-header">
+                            <h3>{{ catalog.name }}</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+                        <div class="row">
+
+                            {% for i in photos %}
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 mb-4">
+                                    <a href="{{ url_for('static', filename=i.url) }}" data-fancybox="gallery" data-caption="185">
+                                        <img class="img-responsive center-block" src="{{ url_for('static', filename=i.url) }}" style="height: 198px!important;">
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block css %}
+    <link href="{{ url_for('static', filename='default/css/jquery.fancybox.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block js %}
+    <script src="{{ url_for('static', filename='default/js/jquery.fancybox.min.js') }}"></script>
+{% endblock %}

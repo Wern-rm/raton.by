@@ -33,8 +33,8 @@
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                     <a class="dropdown-item" href="#">Публикации</a>
                     <a class="dropdown-item" href="#">Документы</a>
-                    <a class="dropdown-item" href="#">Фото материалы</a>
-                    <a class="dropdown-item" href="#">Видео материалы</a>
+                    <a class="dropdown-item" href="{{ url_for('main.photos') }}">Фото материалы</a>
+                    <a class="dropdown-item" href="{{ url_for('main.videos') }}">Видео материалы</a>
                     <a class="dropdown-item" href="{{ url_for('main.page', alias='jobs') }}">Вакансии</a>
                 </div>
             </li>

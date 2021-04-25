@@ -1,0 +1,30 @@
+{% extends "default/base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="col-lg-12 col-md-12 col-sm-12 mb-5">
+            <div class="row">
+
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="page-title page-header">
+                        <h3>Видео материалы</h3>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+                    <div class="row">
+
+                        {% for i in videos %}
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+		                        <iframe width="100%" height="216px;" src="{{ i.url }}" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+	                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
