@@ -67,7 +67,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 mt-3">
-                                        <a href="#" class="btn btn-primary btn-lg float-right">Оставить заявку</a>
+                                        <a href="#" class="btn btn-primary btn-lg float-right" data-toggle="modal" data-target="#create-question">Оставить заявку</a>
                                     </div>
                                 </div>
                             </div>
@@ -87,6 +87,44 @@
                     </div>
 
 
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="create-question" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="create-question" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Оставить заявку на продукцию</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="post">
+                    <div class="modal-body">
+                        {{ form.hidden_tag() }}
+                        <div class="form-group">
+                            <label>Ваше имя<span class="text-danger">*</span></label>
+                            <input type="text" name="name" id="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Ваш телефон<span class="text-danger">*</span></label>
+                            <input type="text" name="phone" id="phone" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Ваш email<span class="text-danger">*</span></label>
+                            <input type="email" name="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Сообщение<span class="text-danger">*</span></label>
+                            <textarea rows="5" name="message" id="message" class="form-control" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
