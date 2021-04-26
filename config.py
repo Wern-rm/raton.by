@@ -37,3 +37,13 @@ class Config(object):
 
     APP_FOLDER = os.path.join(UPLOADS_BASE_DIR, 'app')
     STATIC_APP = os.path.join(APP_FOLDER, 'static')
+
+    CKEDITOR_FILE_UPLOADER = 'dashboard.upload'
+    CKEDITOR_UPLOAD_ERROR_MESSAGE = 'Error upload file'
+    # CKEDITOR_FILE_BROWSER = 'dashboard.uploaded_files'
+    CKEDITOR_PKG_TYPE = 'full'
+    CKEDITOR_SERVE_LOCAL = True
+    CKEDITOR_LANGUAGE = 'ru'
+    CKEDITOR_HEIGHT = 500
+
+    UPLOADED_PATH = os.path.join(STATIC_APP, 'uploads/ckeditor')

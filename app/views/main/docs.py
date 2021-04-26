@@ -4,6 +4,7 @@ from app import db
 from app.controllers.app_controller import app_controller
 from app.models.docs import Docs
 from app.views.main import bp
+from sqlalchemy import func
 
 
 @bp.route('/docs')
@@ -11,5 +12,5 @@ from app.views.main import bp
 def docs(**kwargs):
     kwargs['title'] = 'Документы'
     kwargs['docs'] = db.session.query(Docs).filter(Docs.status == 1).all()
-    kwargs['years'] = db.session.query(Docs).filter(Docs.status == 1).order_by(Docs.year.desc()).group_by(Docs.year).all()
+    kwargs['years'] = db.session.query(Docs).add_columns(func.count(Docs.year), Docs.year).filter(Docs.status == 1).order_by(Docs.year.desc()).group_by(Docs.year).all()
     return render_template("default/docs.html", **kwargs)

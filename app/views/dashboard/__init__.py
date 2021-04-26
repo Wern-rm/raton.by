@@ -19,3 +19,5 @@ from app.views.dashboard.pages import *
 from app.views.dashboard.news import *
 from app.views.dashboard.items import *
 from app.views.dashboard.docs import *
+from app.views.dashboard.files import *
+from app.views.dashboard.ckeditor import uploaded_files, upload

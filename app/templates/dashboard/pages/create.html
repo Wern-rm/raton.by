@@ -1,0 +1,86 @@
+{% extends "dashboard/base.html" %}
+
+{% block description %}
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0">Управление страницами</h1>
+        </div>
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{{ url_for('dashboard.index') }}">Панель управления</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('dashboard.pages') }}">Страницы</a></li>
+                <li class="breadcrumb-item active">Добавление новой страницы</li>
+            </ol>
+         </div>
+    </div>
+{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block content %}
+
+    {{ ckeditor.load() }}
+    {{ ckeditor.config(name='body') }}
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Добавление новой страницы</h3>
+                </div>
+                <form class="" method="post">
+                    {{ form.hidden_tag() }}
+                    <input type="hidden" name="form-id" value="1">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Заголовок страницы</label>
+                            <input type="text" id="name" name="name" class="form-control {% if form.name.errors %} is-invalid {% endif %}">
+                            {% if form.name.errors %}
+                                <div class="invalid-feedback" style="display: block;">
+                                    {{ form.name.errors[0] }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label>Алиас страницы</label>
+                            <input type="text" id="alias" name="alias" class="form-control {% if form.alias.errors %} is-invalid {% endif %}">
+                            {% if form.alias.errors %}
+                                <div class="invalid-feedback" style="display: block;">
+                                    {{ form.alias.errors[0] }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.text.label() }}
+                            {{ form.text() }}
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ url_for('dashboard.pages') }}" class="btn btn-secondary">Назад</a>
+                        <button type="submit" class="btn btn-outline-success float-right">Добавить</button>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block js %}
+{#    ,#}
+
+{#    <script>#}
+{#        document.querySelectorAll('.ckeditor').forEach(item => {#}
+{#            CKEDITOR.replace(item, {#}
+{#                filebrowserBrowseUrl: '/dashboard/check-file',#}
+{#                filebrowserImageUploadUrl: '/dashboard/upload-image'#}
+{#            });#}
+{#        });#}
+{#    </script>#}
+
+{% endblock %}
