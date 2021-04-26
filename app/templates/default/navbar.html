@@ -32,7 +32,7 @@
                 <a class="nav-link dropdown-toggle text-white navbar-size" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Пресс-центр</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                     <a class="dropdown-item" href="#">Публикации</a>
-                    <a class="dropdown-item" href="#">Документы</a>
+                    <a class="dropdown-item" href="{{ url_for('main.docs') }}">Документы</a>
                     <a class="dropdown-item" href="{{ url_for('main.photos') }}">Фото материалы</a>
                     <a class="dropdown-item" href="{{ url_for('main.videos') }}">Видео материалы</a>
                     <a class="dropdown-item" href="{{ url_for('main.page', alias='jobs') }}">Вакансии</a>

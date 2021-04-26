@@ -1,0 +1,64 @@
+{% extends "default/base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="col-lg-12 col-md-12 col-sm-12 mb-5">
+            <div class="row">
+
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="page-title page-header">
+                        <h3>Документы</h3>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+                    <div class="accordion" id="accordionExample">
+                        {% for i in years %}
+                            <div class="card" style="box-shadow: none !important;">
+                                <div class="card-header" id="headingOne">
+                                    <h2 class="mb-0">
+                                        <button style="text-decoration: none!important; color: #0157b5 !important; border: none!important;" class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-{{ i.year }}" aria-expanded="true" aria-controls="collapse-{{ i.year }}">
+                                            <span class="float-left">{{ i.year }} год</span> <span class="float-right"><i class="fas fa-angle-down"></i></span>
+                                        </button>
+                                    </h2>
+                                </div>
+
+                                <div id="collapse-{{ i.year }}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <ul class="list-group">
+                                            {% for j in docs %}
+                                                {% if j.year == i.year %}
+                                                    <li class="list-group-item">
+                                                        <i style="color: #1462b8; font-size: 1.2rem;" class="far fa-file-alt"></i>
+                                                        <a style="color: #1462b8;" href="{{ url_for('static', filename=j.url) }}" target="_blank" style="text-decoration: none!important;">{{ j.name }}</a>
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block css %}
+    <style>
+        .button:focus:not(:focus-visible) {
+            outline: none !important;
+        }
+        .btn.focus, .btn:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+    </style>
+
+{% endblock %}

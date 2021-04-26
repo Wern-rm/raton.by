@@ -18,3 +18,4 @@ from app.views.dashboard.media import *
 from app.views.dashboard.pages import *
 from app.views.dashboard.news import *
 from app.views.dashboard.items import *
+from app.views.dashboard.docs import *

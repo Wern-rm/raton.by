@@ -21,7 +21,7 @@ def electronic_appeal(**kwargs):
             print(1)
             if form1.file.data is not None:
                 print(2)
-                uploader = UploadFiles(basedir=current_app.config.get('STATIC_APP'), storage='user_uploads', extensions=RATON_FILES_EXTENSIONS)
+                uploader = UploadFiles(basedir=current_app.config.get('STATIC_APP'), storage='uploads/user_uploads', extensions=RATON_FILES_EXTENSIONS)
                 filename = uploader.save(file=form1.file.data)
                 file_url = uploader.get_path(filename=filename)
                 print(3)

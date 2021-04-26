@@ -27,6 +27,8 @@ DOCUMENTS = ['rtf', 'odf', 'ods', 'pdf', 'abw', 'doc', 'docx', 'xls', 'xlsx']
 
 ZIP = ['zip']
 
+ALL = IMAGES + DATA + DOCUMENTS + ZIP
+
 
 def lowercase_ext(filename):
     """

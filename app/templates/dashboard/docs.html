@@ -1,0 +1,144 @@
+{% extends "dashboard/base.html" %}
+
+{% block description %}
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0">Управление документами</h1>
+        </div>
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{{ url_for('dashboard.index') }}">Панель управления</a></li>
+                <li class="breadcrumb-item active">Документы</li>
+            </ol>
+         </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Список документов</h3>
+                    <div class="card-tools">
+                        <a class="btn btn-outline-success btn-sm" href="#" data-toggle="modal" data-target="#create-file">Добавить документ</a>
+                        <div class="modal fade" tabindex="-1" role="dialog" id="create-file">
+                            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Добавление нового документа</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form class="" method="post" enctype="multipart/form-data">
+                                        {{ form.hidden_tag() }}
+                                        <input type="hidden" name="form-id" value="1">
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label>Название</label>
+                                                <input type="text" id="name" name="name" class="form-control {% if form.name.errors %} is-invalid {% endif %}">
+                                                {% if form.name.errors %}
+                                                    <div class="invalid-feedback" style="display: block;">
+                                                        {{ form.name.errors[0] }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Год</label>
+                                                <input type="int" id="year" name="year" class="form-control {% if form.year.errors %} is-invalid {% endif %}" value="{{ current_form_year }}">
+                                                {% if form.year.errors %}
+                                                    <div class="invalid-feedback" style="display: block;">
+                                                        {{ form.year.errors[0] }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Документ</label>
+                                                {{ form.file() }}
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                            <button type="submit" class="btn btn-outline-success float-right">Добавить</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Название</th>
+                                <th>Год</th>
+                                <th>Документ</th>
+                                <th>Статус</th>
+                                <th>Опции</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in docs %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ i.name }}</td>
+                                    <td>{{ i.year }}</td>
+                                    <td>
+                                        <a href="{{ url_for('static', filename=i.url) }}" data-toggle="lightbox">{{ i.url }}</a>
+                                    </td>
+                                    <td style="vertical-align: middle;" class="text-center">
+                                        {% if i.status == 0 %}
+                                            <i class="fas fa-check-circle text-danger" title="Не отображается"></i>
+                                        {% else %}
+                                            <i class="fas fa-check-circle text-success" title="Отображается"></i>
+                                        {% endif %}
+                                    </td>
+                                    <td style="vertical-align: middle;" class="text-center">
+                                        <div class="btn-group btn-group-sm">
+                                            {% if i.status == 0 %}
+                                                <a href="{{ url_for('dashboard.doc_activated', doc_id=i.id, status=1) }}" class="btn btn-success" title="Отобразить">
+                                                    <i class="far fa-eye"></i>
+                                                </a>
+                                            {% else %}
+                                                <a href="{{ url_for('dashboard.doc_activated', doc_id=i.id, status=0) }}" class="btn btn-warning" title="Скрыть">
+                                                    <i class="far fa-eye"></i>
+                                                </a>
+                                            {% endif %}
+                                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#delete-file-{{ i.id }}" title="Удалить">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <div class="modal fade" tabindex="-1" role="dialog" id="delete-file-{{ i.id }}">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Удаление документ</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Удалить документ - {{ i.name }}?</p>
+                                                    <p>Данное действие невозможно отменить.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                                                    <a href="{{ url_for('dashboard.doc_delete', doc_id=i.id) }}" class="btn btn-danger">Удалить</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
