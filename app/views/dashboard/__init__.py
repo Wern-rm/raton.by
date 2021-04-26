@@ -21,3 +21,4 @@ from app.views.dashboard.items import *
 from app.views.dashboard.docs import *
 from app.views.dashboard.files import *
 from app.views.dashboard.ckeditor import uploaded_files, upload
+from app.views.dashboard.shops import *

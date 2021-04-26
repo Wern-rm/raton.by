@@ -1,0 +1,93 @@
+{% extends "default/base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="col-lg-12 col-md-12 col-sm-12 mb-5">
+            <div class="row">
+
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="page-title page-header">
+                        <h3>Где купить</h3>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <h4 class="text-center text-uppercase text-primary mb-3 mt-3">ТНП</h4>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3">
+                            <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Aaae90f74834beeda6ba6446316ebde6378c9de19b880b9dd228786983071c182&amp;source=constructor" width="100%" height="400" frameborder="0"></iframe></iframe>
+                        </div>
+
+
+                        {% for i in shops1 %}
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 mb-3">
+                                <div class="card" style="box-shadow: none !important;">
+                                    <div class="card-header" style="color: #0157b5; font-weight: 500;">{{ i.name }}</div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <i class="fas fa-map-marker-alt"></i> {{ i.address }}
+                                        </li>
+                                        <li class="list-group-item">
+                                            <i class="fas fa-phone-square-alt"></i> {{ i.phone }}
+                                        </li>
+                                        {% if i.displaying_site == 1 %}
+                                            <li class="list-group-item">
+                                                <i class="fas fa-globe"></i> <a href="{{ i.site }}" target="_blank">{{ i.site }}</a>
+                                            </li>
+                                        {% endif %}
+                                        {% if i.displaying_email == 1 %}
+                                            <li class="list-group-item">
+                                                <i class="far fa-envelope"></i> Email: <a href="mailto:{{ i.email }}">{{ i.email }}</a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+	                        </div>
+                        {% endfor %}
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <h4 class="text-center text-uppercase text-primary mb-3 mt-3">Электротехника</h4>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3">
+                            <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Abb3afac30f6fa440e64ae2412f6be9fb28ca87f33f7feb8f6c9749db614c3bd3&amp;source=constructor" width="100%" height="400" frameborder="0"></iframe>
+                        </div>
+
+
+                        {% for i in shops2 %}
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 mb-3">
+                                <div class="card" style="box-shadow: none !important;">
+                                    <div class="card-header" style="color: #0157b5; font-weight: 500;">{{ i.name }}</div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <i class="fas fa-map-marker-alt"></i> {{ i.address }}
+                                        </li>
+                                        <li class="list-group-item">
+                                            <i class="fas fa-phone-square-alt"></i> {{ i.phone }}
+                                        </li>
+                                        {% if i.displaying_site == 1 %}
+                                            <li class="list-group-item">
+                                                <i class="fas fa-globe"></i> <a href="{{ i.site }}" target="_blank">{{ i.site }}</a>
+                                            </li>
+                                        {% endif %}
+                                        {% if i.displaying_email == 1 %}
+                                            <li class="list-group-item">
+                                                <i class="far fa-envelope"></i> Email: <a href="mailto:{{ i.email }}">{{ i.email }}</a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+	                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -16,3 +16,4 @@ from app.views.main.reviews import reviews
 from app.views.main.clients import clients
 from app.views.main.news import news
 from app.views.main.new import new
+from app.views.main.shops import shops
