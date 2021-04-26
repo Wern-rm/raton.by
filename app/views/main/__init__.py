@@ -12,3 +12,4 @@ from app.views.main.videos import videos
 from app.views.main.photos import photos
 from app.views.main.staff import staff
 from app.views.main.docs import docs
+from app.views.main.reviews import reviews

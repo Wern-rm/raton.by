@@ -1,0 +1,41 @@
+{% extends "default/base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="col-lg-12 col-md-12 col-sm-12 mb-5">
+            <div class="row">
+
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="page-title page-header">
+                        <h3>Отзывы</h3>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+                    <div class="row">
+
+                        {% for i in reviews %}
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 mb-4">
+                                <a href="{{ url_for('static', filename=i.url) }}" data-fancybox="gallery" data-caption="185">
+                                    <img class="img-responsive img-thumbnail center-block mx-auto border border-primary" src="{{ url_for('static', filename=i.url) }}" height="250" width="auto">
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block css %}
+    <link href="{{ url_for('static', filename='default/css/jquery.fancybox.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block js %}
+    <script src="{{ url_for('static', filename='default/js/jquery.fancybox.min.js') }}"></script>
+{% endblock %}
