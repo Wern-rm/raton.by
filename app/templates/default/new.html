@@ -1,0 +1,43 @@
+{% extends "default/base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="col-lg-12 col-md-12 col-sm-12 mb-5">
+            <div class="row">
+
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="page-title page-header">
+                        <h3>{{ new.title }}</h3>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+                    <div class="row">
+
+{#                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">#}
+{#                            <div class="row">#}
+{#                                <div class="col-lg-12 col-md-12 col-sm-12">#}
+{#                                    <img src="{{ url_for('static', filename=new.image) }}" width="100%" height="auto">#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 mt-3" style="border-bottom: 1px solid #eee;">
+                            {{ new.text|safe }}
+                        </div>
+
+
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 mt-3">
+                            <p class="float-right"><i class="fas fa-eye"></i> <b>Просмотров:</b> {{ new.views }}</p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -14,3 +14,5 @@ from app.views.main.staff import staff
 from app.views.main.docs import docs
 from app.views.main.reviews import reviews
 from app.views.main.clients import clients
+from app.views.main.news import news
+from app.views.main.new import new
