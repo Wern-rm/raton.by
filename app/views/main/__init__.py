@@ -10,3 +10,4 @@ from app.views.main.page import page
 from app.views.main.electrinic_appeal import electronic_appeal
 from app.views.main.videos import videos
 from app.views.main.photos import photos
+from app.views.main.staff import staff

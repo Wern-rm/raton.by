@@ -1,0 +1,49 @@
+{% extends "default/base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="col-lg-12 col-md-12 col-sm-12 mb-5">
+            <div class="row">
+
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="page-title page-header">
+                        <h3>Руководство</h3>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+                    <div class="row">
+
+                        {% for i in staff %}
+                            <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+                                <div class="card mb-2" style="box-shadow: none!important; min-height: 236px;">
+                                    <div class="row no-gutters">
+                                        <div class="col-md-4">
+                                            <img class="bd-placeholder-img" src="{{ url_for('static', filename=i.url) }}" width="200" height="auto">
+                                        </div>
+                                        <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title" style="color:#0157b5 !important;">{{ i.post }}</h5>
+                                            <h6 class="card-text">{{ i.username }}</h6>
+                                            <p class="ml-4 mb-1"><i class="fas fa-phone-square-alt"></i> {{ i.phone }}</p>
+                                            <p class="ml-4 mb-1"><i class="fas fa-fax"></i> {{ i.fax }}</p>
+                                            <p class="ml-4 mb-1">
+                                                <i class="far fa-envelope"></i> <a href="mailto:{{ i.email }}">{{ i.email }}</a>
+                                            </p>
+{#                                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>#}
+{#                                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>#}
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
