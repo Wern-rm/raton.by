@@ -1,7 +1,7 @@
 import locale
 import logging
 
-from flask import Flask
+from flask import Flask, Request
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
@@ -49,4 +49,16 @@ def create_app(config_class=Config):
             elif s.type == 'string':
                 app.config[str(s.key)] = str(s.value)
 
+    app.request_class = CustomRequest
+
     return app
+
+
+class CustomRequest(Request):
+    @property
+    def max_content_length(self):
+        if self.path.startswith("/electronic-appeal"):
+            return 3 * 1024 * 1024
+        else:
+            return super().max_content_length
+
