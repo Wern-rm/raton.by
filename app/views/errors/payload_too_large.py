@@ -1,9 +1,9 @@
-from flask import redirect, url_for
+from flask import render_template
 
 from app.views.main import bp
 
 
 @bp.errorhandler(413)
 def payload_too_large(error):
-    return error
-# redirect(url_for('main.index', action='warning', id=2, error=error)), 200
+    print(error)
+    return render_template("error/base.html"), 200
