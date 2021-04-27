@@ -13,3 +13,8 @@ class ShopsForm(FlaskForm):
                            validators=[validators.optional()],
                            choices=[(1, "ТНП"), (2, "ЭЛЕКТРОТЕХНИКА")],
                            render_kw={'class': 'form-control'})
+
+
+class ShopsMapForm(FlaskForm):
+    tnp = StringField('Карта ТНП')
+    electro = StringField('Карта Электротех')
