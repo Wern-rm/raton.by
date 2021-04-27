@@ -17,146 +17,187 @@
 {% block content %}
     <div class="row">
 
-        <div class="col-lg-3 col-6">
-            <div class="small-box bg-info">
-                <div class="inner">
-                    <h3>{{ items_count }}</h3>
-                    <p>Продуктов в каталоге</p>
-                </div>
-                <div class="icon">
-                    <i class="fas fa-box-open"></i>
-                </div>
-                <a href="{{ url_for('dashboard.items') }}" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-
-        <div class="col-lg-3 col-6">
-            <div class="small-box bg-success">
-                <div class="inner">
-                    <h3>{{ electron_questions_count }}</h3>
-                    <p>Электронных обращений</p>
-                </div>
-                <div class="icon">
-                    <i class="far fa-comment-dots"></i>
-                </div>
-                  <a href="{{ url_for('dashboard.questions') }}" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-
-        <div class="col-lg-3 col-6">
-            <div class="small-box bg-primary">
-                <div class="inner">
-                    <h3>{{ item_applications_count }}</h3>
-                    <p>Заявок на продукцию</p>
-                  </div>
-                <div class="icon">
-                    <i class="fas fa-mouse-pointer"></i>
-                </div>
-                <a href="{{ url_for('dashboard.questions') }}" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-
-        <div class="col-lg-3 col-6">
-            <div class="small-box bg-danger">
-                <div class="inner">
-                    <h3>{{ user_count }}</h3>
-                    <p>Пользователей</p>
-                </div>
-                <div class="icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                  <a href="{{ url_for('dashboard.users') }}" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Последние публикации</h3>
-                    <div class="card-tools">
-                        <a class="btn btn-outline-primary btn-sm" href="{{ url_for('dashboard.news') }}">Смотреть все</a>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{ items_count }}</h3>
+                            <p>Продуктов в каталоге</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-box-open"></i>
+                        </div>
+                        <a href="{{ url_for('dashboard.items') }}" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-                <div class="card-body">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Заголовок</th>
-                                <th>Категория</th>
-                                <th>Просмотров</th>
-                                <th>Статус</th>
-                                <th>Дата добавления</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for i in news %}
-                                <tr>
-                                    <td>{{ loop.index }}</td>
-                                    <td>
-                                        <a href="#" target="_blank">{{ i.title }}</a>
-                                    </td>
-                                    <td>
-                                        {% for j in news_category if j.id == i.category_id %}
-                                            {{ j.name }}
-                                        {% endfor %}
-                                    </td>
-                                    <td>{{ i.views }}</td>
-                                    <td>
-                                        {% if i.status == 0 %}
-                                            <i class="fas fa-check-circle text-danger" title="Не отображается"></i>
-                                        {% else %}
-                                            <i class="fas fa-check-circle text-success" title="Отображается"></i>
-                                        {% endif %}
-                                    </td>
-                                    <td>{{ i.create_date.strftime("%d.%m.%Y %H:%M") }}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>{{ electron_questions_count }}</h3>
+                            <p>Электронных обращений</p>
+                        </div>
+                        <div class="icon">
+                            <i class="far fa-comment-dots"></i>
+                        </div>
+                          <a href="{{ url_for('dashboard.questions') }}" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-primary">
+                        <div class="inner">
+                            <h3>{{ item_applications_count }}</h3>
+                            <p>Заявок на продукцию</p>
+                          </div>
+                        <div class="icon">
+                            <i class="fas fa-mouse-pointer"></i>
+                        </div>
+                        <a href="{{ url_for('dashboard.questions') }}" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3>{{ user_count }}</h3>
+                            <p>Пользователей</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                          <a href="{{ url_for('dashboard.users') }}" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-6">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Последние заявки на продукцию</h3>
-                    <div class="card-tools">
-                        <a class="btn btn-outline-primary btn-sm" href="{{ url_for('dashboard.questions') }}">Смотреть все</a>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card bg-danger">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-exclamation-triangle text-white"></i> Уведомление</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>Внимание! При загрузке изображений и фотографий, используйте разрешенные размеры изображений.</p>
+                            <p>Также помните, что загрузка не обработанных изображений, больших размеров (более 500 кб) будет уменьшать скорость работы сайта.</p>
+                            <p>Используйте <a class="text-white" href="https://lightroom.adobe.com/" target="_blank">Adobe Lightroom</a> для оптимизации изображений.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Имя</th>
-                                <th>Телефон</th>
-                                <th>Email</th>
-                                <th>Статус</th>
-                                <th>Дата добавления</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for i in item_applications %}
-                                <tr>
-                                    <td>{{ loop.index }}</td>
-                                    <td>{{ i.name }}</td>
-                                    <td>{{ i.phone }}</td>
-                                    <td>{{ i.email }}</td>
-                                    <td>
-                                        {% if i.status == 0 %}
-                                            <i class="fas fa-check-circle text-danger" title="Не обработан"></i>
-                                        {% else %}
-                                            <i class="fas fa-check-circle text-success" title="Обработан"></i>
-                                        {% endif %}
-                                    </td>
-                                    <td>{{ i.create_date.strftime("%d.%m.%Y %H:%M") }}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+
+                <div class="col-md-6">
+                    <div class="card bg-primary">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-info-circle text-white"></i> Информация</h3>
+                        </div>
+                        <div class="card-body">
+                            <p><i class="fas fa-code-branch text-white"></i> Версия программного обеспечения: 2.0.42</p>
+                            <ul>
+                                <li><i class="fab fa-python text-white"></i> Python 3.9.4</li>
+                                <li><i class="fas fa-database text-white"></i> MySQL 8.0.23</li>
+                                <li><i class="fas fa-server text-white"></i> Nginx 1.20.0</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Последние публикации</h3>
+                            <div class="card-tools">
+                                <a class="btn btn-outline-primary btn-sm" href="{{ url_for('dashboard.news') }}">Смотреть все</a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Заголовок</th>
+                                        <th>Категория</th>
+                                        <th>Просмотров</th>
+                                        <th>Статус</th>
+                                        <th>Дата добавления</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for i in news %}
+                                        <tr>
+                                            <td>{{ loop.index }}</td>
+                                            <td>
+                                                <a href="#" target="_blank">{{ i.title }}</a>
+                                            </td>
+                                            <td>
+                                                {% for j in news_category if j.id == i.category_id %}
+                                                    {{ j.name }}
+                                                {% endfor %}
+                                            </td>
+                                            <td>{{ i.views }}</td>
+                                            <td>
+                                                {% if i.status == 0 %}
+                                                    <i class="fas fa-check-circle text-danger" title="Не отображается"></i>
+                                                {% else %}
+                                                    <i class="fas fa-check-circle text-success" title="Отображается"></i>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ i.create_date.strftime("%d.%m.%Y %H:%M") }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Последние заявки на продукцию</h3>
+                            <div class="card-tools">
+                                <a class="btn btn-outline-primary btn-sm" href="{{ url_for('dashboard.questions') }}">Смотреть все</a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Имя</th>
+                                        <th>Телефон</th>
+                                        <th>Email</th>
+                                        <th>Статус</th>
+                                        <th>Дата добавления</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for i in item_applications %}
+                                        <tr>
+                                            <td>{{ loop.index }}</td>
+                                            <td>{{ i.name }}</td>
+                                            <td>{{ i.phone }}</td>
+                                            <td>{{ i.email }}</td>
+                                            <td>
+                                                {% if i.status == 0 %}
+                                                    <i class="fas fa-check-circle text-danger" title="Не обработан"></i>
+                                                {% else %}
+                                                    <i class="fas fa-check-circle text-success" title="Обработан"></i>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ i.create_date.strftime("%d.%m.%Y %H:%M") }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
