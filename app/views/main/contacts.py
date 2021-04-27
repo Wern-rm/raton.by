@@ -2,6 +2,7 @@ from flask import render_template, redirect, url_for
 
 from app import db, logger
 from app.controllers.app_controller import app_controller
+from app.controllers.qustion_phone import question_phone
 from app.models.contacts import Contacts
 from app.views.main import bp
 from app.forms.main_contacts import CreateMessageForm
@@ -10,6 +11,7 @@ from app.models.questions import Questions
 
 @bp.route('/contacts', methods=['GET', 'POST'])
 @app_controller
+@question_phone
 def contacts(**kwargs):
     form = CreateMessageForm()
     if form.validate_on_submit():

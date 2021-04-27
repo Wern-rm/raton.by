@@ -120,23 +120,23 @@
                                     </td>
                                     <td style="vertical-align: middle;" class="text-center">
                                         <div class="btn-group btn-group-sm">
-                                            <a href="{{ url_for('dashboard.item', item_id=i.id) }}" class="btn btn-secondary" title="Управлять изображениями и файлами">
-                                                <i class="fas fa-search"></i>
+                                            <a href="{{ url_for('dashboard.item', item_id=i.id) }}" class="btn btn-default" title="Управлять изображениями и файлами">
+                                                <i class="fas fa-search text-info"></i>
                                             </a>
-                                            <a href="#" class="btn btn-info" data-toggle="modal" data-target="#edit-item-{{ i.id }}" title="Изменить">
-                                                <i class="fas fa-pen"></i>
+                                            <a href="#" class="btn btn-default" data-toggle="modal" data-target="#edit-item-{{ i.id }}" title="Изменить">
+                                                <i class="fas fa-pen text-primary"></i>
                                             </a>
                                             {% if i.status == 0 %}
-                                                <a href="{{ url_for('dashboard.item_activated', item_id=i.id, status=1) }}" class="btn btn-success" title="Отобразить">
-                                                    <i class="far fa-eye"></i>
+                                                <a href="{{ url_for('dashboard.item_activated', item_id=i.id, status=1) }}" class="btn btn-default" title="Отобразить">
+                                                    <i class="far fa-eye text-success"></i>
                                                 </a>
                                             {% else %}
-                                                <a href="{{ url_for('dashboard.item_activated', item_id=i.id, status=0) }}" class="btn btn-warning" title="Скрыть">
-                                                    <i class="far fa-eye"></i>
+                                                <a href="{{ url_for('dashboard.item_activated', item_id=i.id, status=0) }}" class="btn btn-default" title="Скрыть">
+                                                    <i class="far fa-eye text-warning"></i>
                                                 </a>
                                             {% endif %}
-                                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#delete-item-{{ i.id }}" title="Удалить">
-                                                <i class="fas fa-trash-alt"></i>
+                                            <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-item-{{ i.id }}" title="Удалить">
+                                                <i class="fas fa-trash-alt text-danger"></i>
                                             </a>
                                         </div>
                                     </td>
@@ -281,20 +281,30 @@
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
                                         <div class="btn-group btn-group-sm">
-                                            <a href="#" class="btn btn-info" data-toggle="modal" data-target="#edit-category-{{ i.id }}" title="Изменить">
-                                                <i class="fas fa-pen"></i>
+                                            <a href="#" class="btn btn-default" data-toggle="modal" data-target="#edit-category-{{ i.id }}" title="Изменить">
+                                                <i class="fas fa-pen text-primary"></i>
                                             </a>
                                             {% if i.status == 0 %}
-                                                <a href="{{ url_for('dashboard.item_category_activated', category_id=i.id, status=1) }}" class="btn btn-success" title="Отобразить">
-                                                    <i class="far fa-eye"></i>
+                                                <a href="{{ url_for('dashboard.item_category_activated', category_id=i.id, status=1) }}" class="btn btn-default" title="Отобразить">
+                                                    <i class="far fa-eye text-success"></i>
                                                 </a>
                                             {% else %}
-                                                <a href="{{ url_for('dashboard.item_category_activated', category_id=i.id, status=0) }}" class="btn btn-warning" title="Скрыть">
-                                                    <i class="far fa-eye"></i>
+                                                <a href="{{ url_for('dashboard.item_category_activated', category_id=i.id, status=0) }}" class="btn btn-default" title="Скрыть">
+                                                    <i class="far fa-eye text-warning"></i>
                                                 </a>
                                             {% endif %}
-                                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#delete-category-{{ i.id }}" title="Удалить">
-                                                <i class="fas fa-trash"></i>
+                                            {% if i.is_popular == 0 %}
+                                                <a href="{{ url_for('dashboard.item_category_popular', category_id=i.id, status=1) }}" class="btn btn-default" title="Отобразить на главной">
+                                                    <i class="fas fa-fire-alt text-success"></i>
+                                                </a>
+                                            {% else %}
+                                                <a href="{{ url_for('dashboard.item_category_popular', category_id=i.id, status=0) }}" class="btn btn-default" title="Убрать с главной">
+                                                    <i class="fas fa-fire-alt text-warning"></i>
+                                                </a>
+                                            {% endif %}
+
+                                            <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-category-{{ i.id }}" title="Удалить">
+                                                <i class="fas fa-trash text-danger"></i>
                                             </a>
                                         </div>
                                     </td>

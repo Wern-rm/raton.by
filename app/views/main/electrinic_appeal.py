@@ -2,6 +2,7 @@ from flask import render_template, redirect, url_for, request, current_app
 
 from app import db, logger
 from app.controllers.app_controller import app_controller
+from app.controllers.qustion_phone import question_phone
 from app.forms.main_electron_appeal import Form1ElectronAppeal, Form2ElectronAppeal
 from app.models.electronic_appeal import ElectronicAppeals
 from app.utils.flask_upload_files import UploadFiles
@@ -12,19 +13,16 @@ RATON_FILES_EXTENSIONS = ['doc', 'docx', 'pdf', 'jpg', 'png', 'txt']
 
 @bp.route('/electronic-appeal', methods=['GET', 'POST'])
 @app_controller
+@question_phone
 def electronic_appeal(**kwargs):
     form1 = Form1ElectronAppeal()
-    print(0)
     if form1.validate_on_submit() and request.form['form-id'] == '1':
         try:
             file_url = None
-            print(1)
             if form1.file.data is not None:
-                print(2)
                 uploader = UploadFiles(basedir=current_app.config.get('STATIC_APP'), storage='uploads/user_uploads', extensions=RATON_FILES_EXTENSIONS)
                 filename = uploader.save(file=form1.file.data)
                 file_url = uploader.get_path(filename=filename)
-                print(3)
             new = ElectronicAppeals(username=form1.fio.data,
                                     address=form1.address.data,
                                     email=form1.email.data,
@@ -33,7 +31,6 @@ def electronic_appeal(**kwargs):
                                     type=1)
             db.session.add(new)
             db.session.commit()
-            print(4)
             return redirect(url_for('main.electronic_appeal', action='success', id=123))
         except Exception as e:
             db.session.rollback()

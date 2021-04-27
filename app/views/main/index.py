@@ -2,14 +2,16 @@ from flask import render_template
 
 from app import db
 from app.controllers.app_controller import app_controller
+from app.controllers.qustion_phone import question_phone
 from app.models.clients import Clients
 from app.models.items_category import ItemsCategory
 from app.models.sliders import Sliders
 from app.views.main import bp
 
 
-@bp.route('/')
+@bp.route('/', methods=['GET', 'POST'])
 @app_controller
+@question_phone
 def index(**kwargs):
     kwargs['title'] = 'Главная'
     kwargs['sliders'] = db.session.query(Sliders).filter(Sliders.status == 1).all()

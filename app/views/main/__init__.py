@@ -17,3 +17,4 @@ from app.views.main.clients import clients
 from app.views.main.news import news
 from app.views.main.new import new
 from app.views.main.shops import shops
+from app.views.errors.payload_too_large import payload_too_large

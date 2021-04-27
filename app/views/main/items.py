@@ -1,17 +1,17 @@
-import bdb
-
 from flask import render_template, redirect, url_for, request
-from app.views.main import bp
-from app.controllers.app_controller import app_controller
-from app.models.sliders import Sliders
+
 from app import db, logger
-from app.models.items_category import ItemsCategory
+from app.controllers.app_controller import app_controller
+from app.controllers.qustion_phone import question_phone
 from app.models.item_images import ItemImages
 from app.models.items import Items
+from app.models.items_category import ItemsCategory
+from app.views.main import bp
 
 
-@bp.route('/items')
+@bp.route('/items', methods=['GET', 'POST'])
 @app_controller
+@question_phone
 def items(**kwargs):
     category_id = 0
     is_items = False

@@ -1,7 +1,7 @@
 import locale
 import logging
 
-from flask import Flask, Request
+from flask import Flask, Request, current_app
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy

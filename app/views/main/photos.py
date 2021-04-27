@@ -2,13 +2,15 @@ from flask import render_template, redirect, url_for, request
 
 from app import db, logger
 from app.controllers.app_controller import app_controller
+from app.controllers.qustion_phone import question_phone
 from app.models.photo_catalogs import PhotoCatalogs
 from app.models.photos import Photos
 from app.views.main import bp
 
 
-@bp.route('/photos')
+@bp.route('/photos', methods=['GET', 'POST'])
 @app_controller
+@question_phone
 def photos(**kwargs):
     catalog_id = 0
     is_photos = False

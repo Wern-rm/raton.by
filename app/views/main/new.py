@@ -1,14 +1,16 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, redirect, url_for
 
-from app import db, logger
+from app import db
 from app.controllers.app_controller import app_controller
-from app.models.news_category import NewsCategory
+from app.controllers.qustion_phone import question_phone
 from app.models.news import News
+from app.models.news_category import NewsCategory
 from app.views.main import bp
 
 
-@bp.route('/new/<int:new_id>')
+@bp.route('/new/<int:new_id>', methods=['GET', 'POST'])
 @app_controller
+@question_phone
 def new(new_id: int, **kwargs):
     data = db.session.query(News).filter(News.id == new_id).first()
     if not data or data.status == 0:

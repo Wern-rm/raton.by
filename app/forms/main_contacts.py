@@ -1,6 +1,6 @@
-from wtforms import *
 from flask_wtf import FlaskForm
-from wtforms.validators import DataRequired, Length, Email, Required, EqualTo
+from wtforms import *
+from wtforms.validators import DataRequired, Length, Email
 
 
 class CreateMessageForm(FlaskForm):

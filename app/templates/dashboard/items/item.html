@@ -78,23 +78,23 @@
                                     </td>
                                     <td style="vertical-align: middle;" class="text-center">
                                         <div class="btn-group btn-group-sm">
-                                            <a href="{{ url_for('dashboard.item_category_image_activated', item_id=data_item.id, image_id=i.id) }}" class="btn btn-info" title="Сделать изображением каталога продукции">
-                                                <i class="fas fa-cube"></i>
+                                            <a href="{{ url_for('dashboard.item_category_image_activated', item_id=data_item.id, image_id=i.id) }}" class="btn btn-default" title="Сделать изображением каталога продукции">
+                                                <i class="fas fa-cube text-info"></i>
                                             </a>
-                                            <a href="{{ url_for('dashboard.item_general_image_activated', item_id=data_item.id, image_id=i.id) }}" class="btn btn-primary" title="Сделать главным изображением продукта">
-                                                <i class="far fa-id-badge"></i>
+                                            <a href="{{ url_for('dashboard.item_general_image_activated', item_id=data_item.id, image_id=i.id) }}" class="btn btn-default" title="Сделать главным изображением продукта">
+                                                <i class="far fa-id-badge text-blue"></i>
                                             </a>
                                             {% if i.status == 0 %}
-                                                <a href="{{ url_for('dashboard.item_image_activated', item_id=data_item.id, image_id=i.id, status=1) }}" class="btn btn-success" title="Отобразить">
-                                                    <i class="far fa-eye"></i>
+                                                <a href="{{ url_for('dashboard.item_image_activated', item_id=data_item.id, image_id=i.id, status=1) }}" class="btn btn-default" title="Отобразить">
+                                                    <i class="far fa-eye text-success"></i>
                                                 </a>
                                             {% else %}
-                                                <a href="{{ url_for('dashboard.item_image_activated', item_id=data_item.id, image_id=i.id, status=0) }}" class="btn btn-warning" title="Скрыть">
-                                                    <i class="far fa-eye"></i>
+                                                <a href="{{ url_for('dashboard.item_image_activated', item_id=data_item.id, image_id=i.id, status=0) }}" class="btn btn-default" title="Скрыть">
+                                                    <i class="far fa-eye text-warning"></i>
                                                 </a>
                                             {% endif %}
-                                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#delete-image-{{ i.id }}" title="Удалить">
-                                                <i class="fas fa-trash-alt"></i>
+                                            <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-image-{{ i.id }}" title="Удалить">
+                                                <i class="fas fa-trash-alt text-danger"></i>
                                             </a>
                                         </div>
                                     </td>
@@ -196,16 +196,16 @@
                                     <td style="vertical-align: middle;" class="text-center">
                                         <div class="btn-group btn-group-sm">
                                             {% if i.status == 0 %}
-                                                <a href="{{ url_for('dashboard.item_file_activated', item_id=data_item.id, file_id=i.id, status=1) }}" class="btn btn-success" title="Отобразить">
-                                                    <i class="far fa-eye"></i>
+                                                <a href="{{ url_for('dashboard.item_file_activated', item_id=data_item.id, file_id=i.id, status=1) }}" class="btn btn-default" title="Отобразить">
+                                                    <i class="far fa-eye text-success"></i>
                                                 </a>
                                             {% else %}
-                                                <a href="{{ url_for('dashboard.item_file_activated', item_id=data_item.id, file_id=i.id, status=0) }}" class="btn btn-warning" title="Скрыть">
-                                                    <i class="far fa-eye"></i>
+                                                <a href="{{ url_for('dashboard.item_file_activated', item_id=data_item.id, file_id=i.id, status=0) }}" class="btn btn-default" title="Скрыть">
+                                                    <i class="far fa-eye text-warning"></i>
                                                 </a>
                                             {% endif %}
-                                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#delete-file-{{ i.id }}" title="Удалить">
-                                                <i class="fas fa-trash-alt"></i>
+                                            <a href="#" class="btn btn-default" data-toggle="modal" data-target="#delete-file-{{ i.id }}" title="Удалить">
+                                                <i class="fas fa-trash-alt text-danger"></i>
                                             </a>
                                         </div>
                                     </td>

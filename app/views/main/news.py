@@ -2,13 +2,15 @@ from flask import render_template, request, redirect, url_for
 
 from app import db, logger
 from app.controllers.app_controller import app_controller
+from app.controllers.qustion_phone import question_phone
 from app.models.news_category import NewsCategory
 from app.models.news import News
 from app.views.main import bp
 
 
-@bp.route('/news')
+@bp.route('/news', methods=['GET', 'POST'])
 @app_controller
+@question_phone
 def news(**kwargs):
     category_id = 0
     try:
