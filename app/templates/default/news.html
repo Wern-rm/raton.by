@@ -27,10 +27,10 @@
                         <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
                             <div class="row">
                                 {% for i in news %}
-                                    <div class=" col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <div class=" col-lg-6 col-md-6 col-sm-12 col-xs-12 mb-4">
                                         <a href="{{ url_for('main.new', new_id=i.id) }}" class="card" style="text-decoration: none;">
                                           <img src="{{ url_for('static', filename=i.image) }}" class="card-img-top" alt="{{ i.image }}">
-                                          <div class="card-body">
+                                          <div class="card-body" style="min-height: 120px !important;">
                                             <p class="card-text text-primary text-center" style="font-size: 16px;">{{ i.title }}</p>
                                           </div>
                                         </a>

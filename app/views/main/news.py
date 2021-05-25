@@ -21,9 +21,9 @@ def news(**kwargs):
         return redirect(url_for('main.news', category_id=0))
 
     if category_id == 0:
-        kwargs['news'] = db.session.query(News).filter(News.status == 1).all()
+        kwargs['news'] = db.session.query(News).filter(News.status == 1).order_by(News.id.desc()).all()
     else:
-        kwargs['news'] = db.session.query(News).filter(News.category_id == category_id, News.status == 1).all()
+        kwargs['news'] = db.session.query(News).filter(News.category_id == category_id, News.status == 1).order_by(News.id.desc()).all()
 
     kwargs['title'] = 'Публикации'
     kwargs['category_id'] = category_id
